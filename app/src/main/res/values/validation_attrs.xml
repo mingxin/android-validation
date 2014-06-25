@@ -2,8 +2,12 @@
 <resources>
 
     <declare-styleable name="validation">
-        <attr name="required" format="boolean" />
-        <attr name="required_msg" format="string" />
+        <attr name="rule">
+            <enum name="required" value="0"/>
+            <enum name="not_blank" value="1"/>
+        </attr>
+        <attr name="message" format="string|reference"/>
+        <attr name="rules" format="reference"/>
     </declare-styleable>
 
 </resources>

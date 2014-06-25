@@ -5,4 +5,12 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="hello_world">Hello world!</string>
 
+    <string-array name="validation_array">
+        <item>Required:"This filed is required !!!"</item>
+        <item>NotBlank:"This filed cannot be blank !!!"</item>
+        <item>Email:This filed must be a email address !!!</item>
+        <item>LengthInRange(4,12):This filed cannot be blank !!!</item>
+        <item>ValueInRange(10,20):This filed cannot be blank !!!</item>
+    </string-array>
+
 </resources>

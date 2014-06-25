@@ -13,7 +13,7 @@ import gmail.chenyoca.validation.supported.Configuration;
  */
 public class EditText extends android.widget.EditText {
 
-    Configuration testConf;
+    public TypedArray typedArray;
 
     public EditText(Context context) {
         super(context);
@@ -30,12 +30,6 @@ public class EditText extends android.widget.EditText {
     }
 
     private void init(Context context, AttributeSet attrs){
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.validation);
-        Boolean required = typedArray.getBoolean(R.styleable.validation_required, false);
-        String message = typedArray.getString(R.styleable.validation_required_msg);
-
-        System.out.println(">> IS REQUIRED: " + required);
-        System.out.println(">> ERR_MSG: " + message);
-
+        this.typedArray = context.obtainStyledAttributes(attrs, R.styleable.validation);
     }
 }
