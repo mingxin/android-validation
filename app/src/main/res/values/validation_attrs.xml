@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="validation">
+        <attr name="required" format="boolean" />
+        <attr name="required_msg" format="string" />
+    </declare-styleable>
+
+</resources>
