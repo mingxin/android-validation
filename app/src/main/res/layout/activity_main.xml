@@ -1,0 +1,154 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none"
+    >
+
+    <LinearLayout
+        android:id="@+id/form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="单项校验："
+            />
+
+        <EditText
+            android:id="@+id/single_test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="组合：必填 | 电子邮件 | 最大长度为20"
+            />
+
+        <Button
+            android:id="@+id/single_commit"
+            android:text="单项校验"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="表单校验:"
+            />
+
+        <EditText
+            android:id="@+id/form_field_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="手机号码"
+            />
+
+        <EditText
+            android:id="@+id/form_field_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="信用卡号"
+            />
+
+        <EditText
+            android:id="@+id/form_field_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="仅数字"
+            />
+
+        <EditText
+            android:id="@+id/form_field_4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="电子邮件"
+            />
+
+        <EditText
+            android:id="@+id/form_field_5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="必须为 chenyoca"
+            />
+
+        <EditText
+            android:id="@+id/form_field_6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="主机地址"
+            />
+
+        <EditText
+            android:id="@+id/form_field_7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="网址"
+            />
+
+        <EditText
+            android:id="@+id/form_field_8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="最大长度为5"
+            />
+
+        <EditText
+            android:id="@+id/form_field_9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="最小长度为4"
+            />
+
+        <EditText
+            android:id="@+id/form_field_10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="长度区间[4,8]"
+            />
+
+        <EditText
+            android:id="@+id/form_field_11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="非空值"
+            />
+
+        <EditText
+            android:id="@+id/form_field_12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="数值"
+            />
+
+        <EditText
+            android:id="@+id/form_field_13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="最大值：100"
+            />
+
+        <EditText
+            android:id="@+id/form_field_14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="最小值：20"
+            />
+
+        <EditText
+            android:id="@+id/form_field_15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="最值区间：[18,30]"
+            />
+
+        <Button
+            android:id="@+id/form_commit"
+            android:text="表单校验"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</ScrollView>
