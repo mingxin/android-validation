@@ -2,6 +2,8 @@
 
 简单易用的Android校验库。
 
+![截图](http://static.oschina.net/uploads/space/2014/0626/170940_Q6Fx_191986.png)
+
 ## 已内置支持的校验方式
 
 * **Required** (必填)
