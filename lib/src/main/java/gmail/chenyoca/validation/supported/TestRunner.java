@@ -22,8 +22,8 @@ public abstract class TestRunner {
     protected double dValue1 = 0;
     protected double dValue2 = 0;
 
-    protected int iValue1 = 0;
-    protected int iValue2 = 0;
+    public int iValue1 = 0;
+    public int iValue2 = 0;
 
     protected String sValue1 = null;
     protected String sValue2 = null;

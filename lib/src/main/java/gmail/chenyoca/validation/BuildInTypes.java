@@ -1,4 +1,4 @@
-package gmail.chenyoca.validation.supported;
+package gmail.chenyoca.validation;
 
 /**
  * AUTH: chenyoca (chenyoca@gmail.com)
