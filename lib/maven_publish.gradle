@@ -11,21 +11,23 @@ def isReleaseBuild() {
 }
 
 def getReleaseRepositoryUrl() {
-    return hasProperty('RELEASE_REPOSITORY_URL') ? RELEASE_REPOSITORY_URL
+    return hasProperty('PRIVATE_HOST_RELEASE_REPOSITORY_URL') ? PRIVATE_HOST_RELEASE_REPOSITORY_URL
             : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
 }
 
 def getSnapshotRepositoryUrl() {
-    return hasProperty('SNAPSHOT_REPOSITORY_URL') ? SNAPSHOT_REPOSITORY_URL
+    return hasProperty('PRIVATE_HOST_SNAPSHOT_REPOSITORY_URL') ? PRIVATE_HOST_SNAPSHOT_REPOSITORY_URL
             : "https://oss.sonatype.org/content/repositories/snapshots/"
 }
 
 def getRepositoryUsername() {
-    return hasProperty('nexusUsername') ? nexusUsername : ""
+    return hasProperty('PRIVATE_HOST_NEXUS_USERNAME') ? PRIVATE_HOST_NEXUS_USERNAME
+            : hasProperty('MAVEN_HOST_USERNAME') ? MAVEN_HOST_USERNAME : ""
 }
 
 def getRepositoryPassword() {
-    return hasProperty('nexusPassword') ? nexusPassword : ""
+    return hasProperty('PRIVATE_HOST_NEXUS_PASSWORD') ? PRIVATE_HOST_NEXUS_PASSWORD
+            : hasProperty('MAVEN_HOST_PASSWORD') ? MAVEN_HOST_PASSWORD : ""
 }
 
 afterEvaluate { project ->
@@ -83,6 +85,7 @@ afterEvaluate { project ->
 
     task androidJavadocs(type: Javadoc) {
         source = android.sourceSets.main.allJava
+
         options {
             encoding = 'UTF-8'
             docEncoding = 'UTF-8'
