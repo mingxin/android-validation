@@ -1,10 +1,11 @@
-package gmail.chenyoca.validation.supported;
+package gmail.chenyoca.validation;
 
 import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import gmail.chenyoca.validation.supported.TestRunner;
 import gmail.chenyoca.validation.supported.runners.ChineseMobilePhoneRunner;
 import gmail.chenyoca.validation.supported.runners.CreditCardRunner;
 import gmail.chenyoca.validation.supported.runners.DigitsRunner;
@@ -37,6 +38,8 @@ public class Configuration {
     private Configuration(Context c) {
         this.resContext = c;
     }
+
+
 
     /**
      * Make a configuration from build in types .
