@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="required">This field is required !</string>
+    <string name="not_blank">This field CANNOT be blank !</string>
+    <string name="digits">Please enter only digits !</string>
+    <string name="email">Please enter a valid email address !</string>
+    <string name="equal_to">Please enter the same value again!</string>
+    <string name="host">Please enter a valid host address !</string>
+    <string name="http_url">Please enter a valid URL !</string>
+    <string name="ipv4">Please enter a valid IPv4 address !</string>
+    <string name="length_in_range">Please enter a value between %1$d and %2$d characters long !</string>
+    <string name="length_in_min">Please enter at least %1$d characters !</string>
+    <string name="length_in_max">Please enter no more than %1$d characters !</string>
+    <string name="numeric">Please enter a valid numeric !</string>
+    <string name="credit_card">Please enter a valid credit card number !</string>
+    <string name="value_in_range">Please enter a value between %1$f and %2$f !</string>
+    <string name="value_in_min">Please enter a value at least %1$f !</string>
+    <string name="value_in_max">Please enter a value no more than %1$f !</string>
+    <string name="chinese_mobile_phone">Please enter a valid chinese mobile phone number !</string>
+</resources>

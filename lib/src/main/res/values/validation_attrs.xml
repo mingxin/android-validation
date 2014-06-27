@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="validation">
+        <attr name="rule">
+            <enum name="required" value="0"/>
+            <enum name="not_blank" value="1"/>
+        </attr>
+        <attr name="message" format="string|reference"/>
+        <attr name="rules" format="reference"/>
+    </declare-styleable>
+
+</resources>

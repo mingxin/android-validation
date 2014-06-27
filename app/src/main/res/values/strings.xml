@@ -2,7 +2,6 @@
 <resources>
 
     <string name="app_name">AndroidValidation</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_main">Android表单校验库</string>
 
 </resources>
