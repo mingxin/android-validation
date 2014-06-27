@@ -1,13 +1,23 @@
 package gmail.chenyoca.validation;
 
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import gmail.chenyoca.validation.supported.Configuration;
 import gmail.chenyoca.validation.supported.TestRunner;
+import gmail.chenyoca.validation.supported.runners.ChineseMobilePhoneRunner;
+import gmail.chenyoca.validation.supported.runners.CreditCardRunner;
+import gmail.chenyoca.validation.supported.runners.DigitsRunner;
+import gmail.chenyoca.validation.supported.runners.EmailRunner;
+import gmail.chenyoca.validation.supported.runners.HTTPURLRunner;
+import gmail.chenyoca.validation.supported.runners.HostRunner;
+import gmail.chenyoca.validation.supported.runners.IPv4Runner;
+import gmail.chenyoca.validation.supported.runners.LengthInMaxRunner;
+import gmail.chenyoca.validation.supported.runners.LengthInRangeRunner;
+import gmail.chenyoca.validation.supported.runners.NumericRunner;
 import gmail.chenyoca.validation.supported.runners.RequiredRunner;
 
 /**
@@ -19,6 +29,8 @@ public class FormValidator {
 
     private String message;
 
+    private ViewGroup form;
+
     public String getMessage(){
         return message;
     }
@@ -28,6 +40,67 @@ public class FormValidator {
     public FormValidator configFor(Configuration config, int viewId){
         configs.append(viewId, config);
         return this;
+    }
+
+    /**
+     * Bind a form for action
+     * @param form Target form layout
+     * @return FormValidator instance.
+     */
+    public FormValidator bind(ViewGroup form){
+        this.form = form;
+        return this;
+    }
+
+    /**
+     * Apply InputType to EditText.
+     */
+    public FormValidator applyTypeToView(){
+        int childrenCount = form.getChildCount();
+        for (int i = 0; i < childrenCount; i++){
+            View c = form.getChildAt(i);
+            if (c instanceof EditText){
+                EditText item = (EditText) c;
+                Configuration conf = configs.get(item.getId());
+                if (conf == null) continue;
+                int inputType = 0;
+                for (TestRunner r : conf.runners){
+                    if (r instanceof ChineseMobilePhoneRunner){
+                        inputType |= InputType.TYPE_CLASS_PHONE;
+                    }
+                    if (r instanceof CreditCardRunner || r instanceof NumericRunner){
+                        inputType |= InputType.TYPE_CLASS_NUMBER;
+                    }
+                    if (r instanceof DigitsRunner){
+                        inputType |= InputType.TYPE_NUMBER_FLAG_SIGNED;
+                    }
+                    if (r instanceof EmailRunner){
+                        inputType |= InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS;
+                    }
+                    if (r instanceof HostRunner || r instanceof HTTPURLRunner || r instanceof IPv4Runner){
+                        inputType |= InputType.TYPE_TEXT_VARIATION_URI;
+                    }
+                    //
+                    if (r instanceof LengthInMaxRunner){
+                        item.setMaxHeight(r.iValue1);
+                    }else if (r instanceof LengthInRangeRunner){
+                        item.setMaxHeight(r.iValue2);
+                    }
+                }
+                item.setInputType(inputType);
+            }
+        }
+        return this;
+    }
+
+    public boolean test(){
+        if (form == null) throw new IllegalStateException("Form is NULL ! Call 'bind(form)' First !");
+        return testForm(form);
+    }
+
+    public boolean testAll(){
+        if (form == null) throw new IllegalStateException("Form is NULL ! Call 'bind(form)' First !");
+        return testFormAll(form);
     }
 
     /**

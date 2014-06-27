@@ -8,9 +8,8 @@ import android.widget.LinearLayout;
 
 import gmail.chenyoca.validation.FormValidator;
 import gmail.chenyoca.validation.ResultWrapper;
-import gmail.chenyoca.validation.supported.BuildInTypes;
-import gmail.chenyoca.validation.supported.Configuration;
-import gmail.chenyoca.validation.supported.TestRunner;
+import gmail.chenyoca.validation.BuildInTypes;
+import gmail.chenyoca.validation.Configuration;
 
 public class MainActivity extends Activity {
 
@@ -56,6 +55,9 @@ public class MainActivity extends Activity {
         fv.configFor(Configuration.buildIn(this, BuildInTypes.ValueInMax, 100), R.id.form_field_13);
         fv.configFor(Configuration.buildIn(this, BuildInTypes.ValueInMin, 20.0), R.id.form_field_14);
         fv.configFor(Configuration.buildIn(this, BuildInTypes.ValueInRange, 18, 30), R.id.form_field_15);
+
+        fv.bind(form)
+          .applyTypeToView();
 
         final Button formCommit = (Button) findViewById(R.id.form_commit);
         formCommit.setOnClickListener(new View.OnClickListener() {
