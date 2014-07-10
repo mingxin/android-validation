@@ -1,9 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="gmail.chenyoca.validation">
+    package="com.github.chenyoca.validation">
 
-    <application
-    >
-
-    </application>
+    <application/>
 
 </manifest>
