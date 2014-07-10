@@ -1,26 +1,27 @@
-apply plugin: 'android-library'
+apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 18
-    buildToolsVersion "19.0.1"
+    compileSdkVersion 19
+    buildToolsVersion "19.1.0"
 
     defaultConfig {
-        minSdkVersion 8
-        targetSdkVersion 16
+        applicationId "com.github.chenyoca.snippet"
+        minSdkVersion 11
+        targetSdkVersion 11
         versionCode 1
         versionName "1.0"
     }
     buildTypes {
         release {
             runProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:19.+'
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:19.+'
 }
 
-apply from: 'maven_publish.gradle'
+apply from: 'https://raw.githubusercontent.com/chenyoca/gradle_publish/master/publish_aar.gradle'
