@@ -4,6 +4,35 @@
 
 ![截图](http://static.oschina.net/uploads/space/2014/0626/170940_Q6Fx_191986.png)
 
+## Gradle 依赖
+
+Add repository
+
+```groovy
+
+    allprojects {
+     repositories {
+         // !!!! ADD THIS !!!!
+         maven{ url 'http://oss.sonatype.org/content/groups/public/' }
+     }
+    }
+
+```
+
+Add dependency
+
+```groovy
+
+    dependencies {
+        compile 'com.github.chenyoca:android-validation:2.0'
+    }
+
+```
+
+### 将项目打包并发布到Sonatype的命令：
+
+> ./gradlew clean uploadArchives -PUsingSonatype
+
 ## 已内置支持的校验方式
 
 * **Required** (必填)
