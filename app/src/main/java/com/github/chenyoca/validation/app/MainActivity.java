@@ -11,7 +11,6 @@ import com.github.chenyoca.validation.Config;
 import com.github.chenyoca.validation.FormValidator;
 import com.github.chenyoca.validation.ResultWrapper;
 
-
 public class MainActivity extends Activity {
 
     @Override

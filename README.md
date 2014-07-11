@@ -33,9 +33,9 @@
 
 ```java
 
-    Configuration conf = Configuration.buildIn(context, BuildInTypes.Required, "必填选项！");
-    conf.add(BuildInTypes.LengthInMax, 20);
-    conf.add(BuildInTypes.Email);
+    Config conf = Config.from(Types.Required, "必填选项！");
+    conf.add(Types.LengthInMax, 20);
+    conf.add(Types.Email);
     
 ```
 
@@ -57,22 +57,22 @@
 ```java
 
     final FormValidator fv = new FormValidator();
-    // FormValidator.configFor(*Config instance*, *view id for EditText*)
-    fv.configFor(Configuration.buildIn(context, BuildInTypes.ChineseMobilePhone), R.id.form_field_1);
-    fv.configFor(Configuration.buildIn(context, BuildInTypes.CreditCard), R.id.form_field_2);
-    fv.configFor(Configuration.buildIn(context, BuildInTypes.Digits), R.id.form_field_3);
-    fv.configFor(Configuration.buildIn(context, BuildInTypes.Email), R.id.form_field_4);
-    fv.configFor(Configuration.buildIn(context, BuildInTypes.EqualTo, "chenyoca"), R.id.form_field_5);
-    fv.configFor(Configuration.buildIn(context, BuildInTypes.Host), R.id.form_field_6);
-    fv.configFor(Configuration.buildIn(context, BuildInTypes.HTTP_URL), R.id.form_field_7);
-    fv.configFor(Configuration.buildIn(context, BuildInTypes.LengthInMax, 5), R.id.form_field_8);
-    fv.configFor(Configuration.buildIn(context, BuildInTypes.LengthInMin, 4), R.id.form_field_9);
-    fv.configFor(Configuration.buildIn(context, BuildInTypes.LengthInRange, 4,8), R.id.form_field_10);
-    fv.configFor(Configuration.buildIn(context, BuildInTypes.NotBlank), R.id.form_field_11);
-    fv.configFor(Configuration.buildIn(context, BuildInTypes.Numeric), R.id.form_field_12);
-    fv.configFor(Configuration.buildIn(context, BuildInTypes.ValueInMax, 100), R.id.form_field_13);
-    fv.configFor(Configuration.buildIn(context, BuildInTypes.ValueInMin, 20.0), R.id.form_field_14);
-    fv.configFor(Configuration.buildIn(context, BuildInTypes.ValueInRange, 18, 30), R.id.form_field_15);
+    // FormValidator.addField(*Config instance*, *view id for EditText*)
+    fv.addField(Config.from(Types.ChineseMobilePhone), R.id.form_field_1);
+    fv.addField(Config.from(Types.CreditCard), R.id.form_field_2);
+    fv.addField(Config.from(Types.Digits), R.id.form_field_3);
+    fv.addField(Config.from(Types.Email), R.id.form_field_4);
+    fv.addField(Config.from(Types.EqualTo, "chenyoca"), R.id.form_field_5);
+    fv.addField(Config.from(Types.Host), R.id.form_field_6);
+    fv.addField(Config.from(Types.HTTP_URL), R.id.form_field_7);
+    fv.addField(Config.from(Types.LengthInMax, 5), R.id.form_field_8);
+    fv.addField(Config.from(Types.LengthInMin, 4), R.id.form_field_9);
+    fv.addField(Config.from(Types.LengthInRange, 4,8), R.id.form_field_10);
+    fv.addField(Config.from(Types.NotBlank), R.id.form_field_11);
+    fv.addField(Config.from(Types.Numeric), R.id.form_field_12);
+    fv.addField(Config.from(Types.ValueInMax, 100), R.id.form_field_13);
+    fv.addField(Config.from(Types.ValueInMin, 20.0), R.id.form_field_14);
+    fv.addField(Config.from(Types.ValueInRange, 18, 30), R.id.form_field_15);
         
 ```
 
@@ -107,11 +107,11 @@
 
 ## 如何扩展？
 
-通过 Configuration的扩展接口，添加你自定义的校验实现类
+通过 Config的扩展接口，添加你自定义的校验实现类
 
 ```java
 
-    // 1. 添加到已创建的Configuration中：
+    // 1. 添加到已创建的Config中：
     
     conf.add(new TestRunner("出错时，此消息被返回并显示到EditText中") {
         @Override
@@ -121,9 +121,9 @@
         }
     });
     
-    // 2. 通过自定义TestRunner创建Configuration：
+    // 2. 通过自定义TestRunner创建Config：
     
-    Configuration.custom(context, new TestRunner("出错时，此消息被返回并显示到EditText中") {
+    Config.custom(new TestRunner("出错时，此消息被返回并显示到EditText中") {
         @Override
         public boolean test(CharSequence inputValue) {
             return false;
@@ -137,7 +137,7 @@
 
 ### 校验顺序
 
-校验顺序按Configuration添加配置的顺序进行校验。
+校验顺序按Config添加配置的顺序进行校验。
 
 **如果添加 `Required` 校验类型，则 `Required` 无论在哪个顺序被添加，都会被首先校验。**
 
