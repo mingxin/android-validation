@@ -1,19 +1,14 @@
-package com.github.chenyoca.validation.supported.runners;
-
-import android.content.Context;
-
-import com.github.chenyoca.validation.R;
-import com.github.chenyoca.validation.supported.TestRunner;
+package com.github.chenyoca.validation.supported;
 
 /**
  * User: chenyoca@gmail.com
  * Date: 2014-06-26
- * Equal to a value
+ * Value in max
  */
-public class EqualToRunner extends TestRunner{
+public class ValueInMinRunner extends TestRunner{
 
-    public EqualToRunner(Context c){
-        super(c, R.string.equal_to);
+    public ValueInMinRunner(){
+        super("请输入大于%0f的数值！");
     }
 
     @Override
@@ -23,16 +18,16 @@ public class EqualToRunner extends TestRunner{
 
     @Override
     protected boolean testIntValue(int inputValue, int val1, int val2) {
-        return inputValue == val1;
+        return inputValue >= val1;
     }
 
     @Override
     protected boolean testDoubleValue(double inputValue, double val1, double val2) {
-        return inputValue == val2;
+        return inputValue >= val1;
     }
 
     @Override
     protected boolean testStringValue(String inputValue, String val1, String bal2) {
-        return inputValue.equals(val1);
+        throw new IllegalArgumentException("ValueInMin Test ONLY accept int/double/float parameters!");
     }
 }

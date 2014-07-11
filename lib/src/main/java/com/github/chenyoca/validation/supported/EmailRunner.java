@@ -1,9 +1,4 @@
-package com.github.chenyoca.validation.supported.runners;
-
-import android.content.Context;
-
-import com.github.chenyoca.validation.R;
-import com.github.chenyoca.validation.supported.TestRunner;
+package com.github.chenyoca.validation.supported;
 
 /**
  * User: chenyoca@gmail.com
@@ -17,8 +12,8 @@ public class EmailRunner extends TestRunner{
                     "(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+" +
                     "[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$";
 
-    public EmailRunner(Context c){
-        super(c, R.string.email);
+    public EmailRunner(){
+        super("请输入有效的邮件地址！");
     }
 
     @Override

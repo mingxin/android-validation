@@ -6,8 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.github.chenyoca.validation.BuildInTypes;
-import com.github.chenyoca.validation.Configuration;
+import com.github.chenyoca.validation.Types;
+import com.github.chenyoca.validation.Config;
 import com.github.chenyoca.validation.FormValidator;
 import com.github.chenyoca.validation.ResultWrapper;
 
@@ -19,9 +19,9 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Configuration conf = Configuration.buildIn(this, BuildInTypes.Required, "必填选项！");
-        conf.add(BuildInTypes.LengthInMax, 20);
-        conf.add(BuildInTypes.Email);
+        final Config conf = Config.from(Types.Required, "必填选项！");
+        conf.add(Types.LengthInMax, 20);
+        conf.add(Types.Email);
 
         final android.widget.EditText test = (android.widget.EditText) findViewById(R.id.single_test);
 
@@ -40,21 +40,21 @@ public class MainActivity extends Activity {
 
         final LinearLayout form = (LinearLayout) findViewById(R.id.form);
         final FormValidator fv = new FormValidator();
-        fv.configFor(Configuration.buildIn(this, BuildInTypes.ChineseMobilePhone), R.id.form_field_1);
-        fv.configFor(Configuration.buildIn(this, BuildInTypes.CreditCard), R.id.form_field_2);
-        fv.configFor(Configuration.buildIn(this, BuildInTypes.Digits), R.id.form_field_3);
-        fv.configFor(Configuration.buildIn(this, BuildInTypes.Email), R.id.form_field_4);
-        fv.configFor(Configuration.buildIn(this, BuildInTypes.EqualTo, "chenyoca"), R.id.form_field_5);
-        fv.configFor(Configuration.buildIn(this, BuildInTypes.Host), R.id.form_field_6);
-        fv.configFor(Configuration.buildIn(this, BuildInTypes.HTTPURL), R.id.form_field_7);
-        fv.configFor(Configuration.buildIn(this, BuildInTypes.LengthInMax, 5), R.id.form_field_8);
-        fv.configFor(Configuration.buildIn(this, BuildInTypes.LengthInMin, 4), R.id.form_field_9);
-        fv.configFor(Configuration.buildIn(this, BuildInTypes.LengthInRange, 4,8), R.id.form_field_10);
-        fv.configFor(Configuration.buildIn(this, BuildInTypes.NotBlank), R.id.form_field_11);
-        fv.configFor(Configuration.buildIn(this, BuildInTypes.Numeric), R.id.form_field_12);
-        fv.configFor(Configuration.buildIn(this, BuildInTypes.ValueInMax, 100), R.id.form_field_13);
-        fv.configFor(Configuration.buildIn(this, BuildInTypes.ValueInMin, 20.0), R.id.form_field_14);
-        fv.configFor(Configuration.buildIn(this, BuildInTypes.ValueInRange, 18, 30), R.id.form_field_15);
+        fv.addField(Config.from(Types.ChineseMobilePhone), R.id.form_field_1);
+        fv.addField(Config.from(Types.CreditCard), R.id.form_field_2);
+        fv.addField(Config.from(Types.Digits), R.id.form_field_3);
+        fv.addField(Config.from(Types.Email), R.id.form_field_4);
+        fv.addField(Config.from(Types.EqualTo, "chenyoca"), R.id.form_field_5);
+        fv.addField(Config.from(Types.Host), R.id.form_field_6);
+        fv.addField(Config.from(Types.HTTPURL), R.id.form_field_7);
+        fv.addField(Config.from(Types.LengthInMax, 5), R.id.form_field_8);
+        fv.addField(Config.from(Types.LengthInMin, 4), R.id.form_field_9);
+        fv.addField(Config.from(Types.LengthInRange, 4, 8), R.id.form_field_10);
+        fv.addField(Config.from(Types.NotBlank), R.id.form_field_11);
+        fv.addField(Config.from(Types.Numeric), R.id.form_field_12);
+        fv.addField(Config.from(Types.ValueInMax, 100), R.id.form_field_13);
+        fv.addField(Config.from(Types.ValueInMin, 20.0), R.id.form_field_14);
+        fv.addField(Config.from(Types.ValueInRange, 18, 30), R.id.form_field_15);
 
         fv.bind(form)
           .applyTypeToView();

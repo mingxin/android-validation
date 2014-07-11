@@ -1,9 +1,4 @@
-package com.github.chenyoca.validation.supported.runners;
-
-import android.content.Context;
-
-import com.github.chenyoca.validation.R;
-import com.github.chenyoca.validation.supported.TestRunner;
+package com.github.chenyoca.validation.supported;
 
 /**
  * User: chenyoca@gmail.com
@@ -15,10 +10,9 @@ public class HTTPURLRunner extends TestRunner{
     static final String URL_REGEX =
             "^(https?:\\/\\/)?[\\w\\-_]+(\\.[\\w\\-_]+)+([\\w\\-\\.,@?^=%&amp;:/~\\+#]*[\\w\\-\\@?^=%&amp;/~\\+#])?$";
 
-    public HTTPURLRunner(Context c){
-        super(c, R.string.http_url);
+    public HTTPURLRunner(){
+        super("请输入有效的网址！");
     }
-
 
     @Override
     public boolean test(CharSequence inputValue) {

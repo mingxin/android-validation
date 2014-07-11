@@ -1,9 +1,4 @@
-package com.github.chenyoca.validation.supported.runners;
-
-import android.content.Context;
-
-import com.github.chenyoca.validation.R;
-import com.github.chenyoca.validation.supported.TestRunner;
+package com.github.chenyoca.validation.supported;
 
 /**
  * User: chenyoca@gmail.com
@@ -13,8 +8,9 @@ import com.github.chenyoca.validation.supported.TestRunner;
  */
 public class CreditCardRunner extends TestRunner{
 
-    public CreditCardRunner(Context c){
-        super(c, R.string.email);
+
+    public CreditCardRunner(){
+        super("请输入有效的信用卡号码！");
     }
 
     @Override

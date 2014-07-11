@@ -1,9 +1,4 @@
-package com.github.chenyoca.validation.supported.runners;
-
-import android.content.Context;
-
-import com.github.chenyoca.validation.R;
-import com.github.chenyoca.validation.supported.TestRunner;
+package com.github.chenyoca.validation.supported;
 
 /**
  * User: chenyoca@gmail.com
@@ -12,8 +7,8 @@ import com.github.chenyoca.validation.supported.TestRunner;
  */
 public class ValueInMaxRunner extends TestRunner{
 
-    public ValueInMaxRunner(Context c){
-        super(c, R.string.length_in_max);
+    public ValueInMaxRunner(){
+        super("请输入小于%0f的数值！");
     }
 
     @Override

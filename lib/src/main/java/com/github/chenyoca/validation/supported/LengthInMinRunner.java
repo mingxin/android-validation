@@ -1,9 +1,4 @@
-package com.github.chenyoca.validation.supported.runners;
-
-import android.content.Context;
-
-import com.github.chenyoca.validation.R;
-import com.github.chenyoca.validation.supported.TestRunner;
+package com.github.chenyoca.validation.supported;
 
 /**
  * User: chenyoca@gmail.com
@@ -12,8 +7,8 @@ import com.github.chenyoca.validation.supported.TestRunner;
  */
 public class LengthInMinRunner extends TestRunner{
 
-    public LengthInMinRunner(Context c){
-        super(c, R.string.length_in_min);
+    public LengthInMinRunner(){
+        super("请输入长度大于%d的内容！");
     }
 
     @Override

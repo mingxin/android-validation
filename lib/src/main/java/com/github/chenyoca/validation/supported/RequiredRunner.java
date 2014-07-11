@@ -1,10 +1,6 @@
-package com.github.chenyoca.validation.supported.runners;
+package com.github.chenyoca.validation.supported;
 
-import android.content.Context;
 import android.text.TextUtils;
-
-import com.github.chenyoca.validation.R;
-import com.github.chenyoca.validation.supported.TestRunner;
 
 /**
  * AUTH: chenyoca (chenyoca@gmail.com)
@@ -13,8 +9,8 @@ import com.github.chenyoca.validation.supported.TestRunner;
  */
 public class RequiredRunner extends TestRunner{
 
-    public RequiredRunner(Context c){
-        super(c, R.string.required);
+    public RequiredRunner(){
+        super("必填选项！");
     }
 
     @Override

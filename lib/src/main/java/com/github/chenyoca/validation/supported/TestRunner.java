@@ -1,7 +1,5 @@
 package com.github.chenyoca.validation.supported;
 
-import android.content.Context;
-
 import java.util.regex.Pattern;
 
 /**
@@ -30,10 +28,6 @@ public abstract class TestRunner {
 
     public TestRunner(String message){
         this.message = message;
-    }
-
-    protected TestRunner(Context c, int msgResId){
-        this(c.getResources().getString(msgResId));
     }
 
     public abstract boolean test(CharSequence inputValue);

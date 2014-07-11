@@ -1,10 +1,6 @@
-package com.github.chenyoca.validation.supported.runners;
+package com.github.chenyoca.validation.supported;
 
-import android.content.Context;
 import android.text.TextUtils;
-
-import com.github.chenyoca.validation.R;
-import com.github.chenyoca.validation.supported.TestRunner;
 
 /**
  * User: chenyoca@gmail.com
@@ -13,8 +9,9 @@ import com.github.chenyoca.validation.supported.TestRunner;
  */
 public class DigitsRunner extends TestRunner{
 
-    public DigitsRunner(Context c){
-        super(c, R.string.digits);
+
+    public DigitsRunner(){
+        super("只能输入数字！");
     }
 
     @Override

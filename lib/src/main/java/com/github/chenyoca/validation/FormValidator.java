@@ -7,18 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.github.chenyoca.validation.supported.ChineseMobilePhoneRunner;
+import com.github.chenyoca.validation.supported.CreditCardRunner;
+import com.github.chenyoca.validation.supported.DigitsRunner;
+import com.github.chenyoca.validation.supported.EmailRunner;
+import com.github.chenyoca.validation.supported.HTTPURLRunner;
+import com.github.chenyoca.validation.supported.HostRunner;
+import com.github.chenyoca.validation.supported.IPv4Runner;
+import com.github.chenyoca.validation.supported.LengthInMaxRunner;
+import com.github.chenyoca.validation.supported.LengthInRangeRunner;
+import com.github.chenyoca.validation.supported.NumericRunner;
+import com.github.chenyoca.validation.supported.RequiredRunner;
 import com.github.chenyoca.validation.supported.TestRunner;
-import com.github.chenyoca.validation.supported.runners.ChineseMobilePhoneRunner;
-import com.github.chenyoca.validation.supported.runners.CreditCardRunner;
-import com.github.chenyoca.validation.supported.runners.DigitsRunner;
-import com.github.chenyoca.validation.supported.runners.EmailRunner;
-import com.github.chenyoca.validation.supported.runners.HTTPURLRunner;
-import com.github.chenyoca.validation.supported.runners.HostRunner;
-import com.github.chenyoca.validation.supported.runners.IPv4Runner;
-import com.github.chenyoca.validation.supported.runners.LengthInMaxRunner;
-import com.github.chenyoca.validation.supported.runners.LengthInRangeRunner;
-import com.github.chenyoca.validation.supported.runners.NumericRunner;
-import com.github.chenyoca.validation.supported.runners.RequiredRunner;
 
 /**
  * User: chenyoca@gmail.com
@@ -35,9 +35,9 @@ public class FormValidator {
         return message;
     }
 
-    private SparseArray<Configuration> configs = new SparseArray<Configuration>();
+    private SparseArray<Config> configs = new SparseArray<Config>();
 
-    public FormValidator configFor(Configuration config, int viewId){
+    public FormValidator addField(Config config, int viewId){
         configs.append(viewId, config);
         return this;
     }
@@ -61,7 +61,7 @@ public class FormValidator {
             View c = form.getChildAt(i);
             if (c instanceof EditText){
                 EditText item = (EditText) c;
-                Configuration conf = configs.get(item.getId());
+                Config conf = configs.get(item.getId());
                 if (conf == null) continue;
                 int inputType = 0;
                 for (TestRunner r : conf.runners){
@@ -116,7 +116,7 @@ public class FormValidator {
             View c = form.getChildAt(i);
             if (c instanceof EditText){
                 EditText item = (EditText) c;
-                Configuration conf = configs.get(item.getId());
+                Config conf = configs.get(item.getId());
                 if (conf == null) continue;
                 ResultWrapper rs = testField(item, conf);
                 testPassed &= rs.passed;
@@ -141,7 +141,7 @@ public class FormValidator {
      * @param conf Test configuration .
      * @return Test result wrapper.
      */
-    public static ResultWrapper testField(EditText field, Configuration conf){
+    public static ResultWrapper testField(EditText field, Config conf){
         if (conf == null) return new ResultWrapper(false,"Field configuration CANNOT BE NULL !!");
         boolean passed = true;
         String message = null;

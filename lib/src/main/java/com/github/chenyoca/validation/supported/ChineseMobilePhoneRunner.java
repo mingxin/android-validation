@@ -1,9 +1,4 @@
-package com.github.chenyoca.validation.supported.runners;
-
-import android.content.Context;
-
-import com.github.chenyoca.validation.R;
-import com.github.chenyoca.validation.supported.TestRunner;
+package com.github.chenyoca.validation.supported;
 
 /**
  * User: chenyoca@gmail.com
@@ -14,8 +9,8 @@ public class ChineseMobilePhoneRunner extends TestRunner{
 
     static final String PHONE_REGEX = "^(\\+?\\d{2}-?)?(1[0-9])\\d{9}$";
 
-    public ChineseMobilePhoneRunner(Context c){
-        super(c, R.string.chinese_mobile_phone);
+    public ChineseMobilePhoneRunner(){
+        super("请输入有效的手机号码！");
     }
 
     @Override

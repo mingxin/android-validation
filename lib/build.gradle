@@ -5,7 +5,7 @@ android {
     buildToolsVersion "19.1.0"
 
     defaultConfig {
-        applicationId "com.github.chenyoca.snippet"
+        applicationId "com.github.chenyoca.validation"
         minSdkVersion 11
         targetSdkVersion 11
         versionCode 1

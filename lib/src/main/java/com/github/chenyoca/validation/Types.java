@@ -5,7 +5,7 @@ package com.github.chenyoca.validation;
  * DATE: 2014-06-25
  * Test types.
  */
-public enum BuildInTypes {
+public enum Types {
     Required,
     NotBlank,
     Digits,

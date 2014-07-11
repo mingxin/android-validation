@@ -1,10 +1,6 @@
-package com.github.chenyoca.validation.supported.runners;
+package com.github.chenyoca.validation.supported;
 
-import android.content.Context;
 import android.text.TextUtils;
-
-import com.github.chenyoca.validation.R;
-import com.github.chenyoca.validation.supported.TestRunner;
 
 /**
  * AUTH: chenyoca (chenyoca@gmail.com)
@@ -13,9 +9,10 @@ import com.github.chenyoca.validation.supported.TestRunner;
  */
 public class NotBlankRunner extends TestRunner{
 
-    public NotBlankRunner(Context c){
-        super(c, R.string.not_blank);
+    public NotBlankRunner(){
+        super("输入的内容不能为任何空值！");
     }
+
 
     @Override
     public boolean test(CharSequence inputValue) {

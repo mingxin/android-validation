@@ -1,7 +1,4 @@
-package com.github.chenyoca.validation.supported.runners;
-
-import android.content.Context;
-import com.github.chenyoca.validation.R;
+package com.github.chenyoca.validation.supported;
 
 /**
  * User: chenyoca@gmail.com
@@ -12,10 +9,10 @@ public class HostRunner extends IPv4Runner{
 
     static final String HOST_REGEX = "^([a-zA-Z0-9]([a-zA-Z0-9\\-]{0,65}[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,6}$";
 
-    public HostRunner(Context c){
-        super(c, R.string.host);
-    }
 
+    public HostRunner(){
+        super("请输入有效的主机地址！");
+    }
 
     @Override
     public boolean test(CharSequence inputValue) {

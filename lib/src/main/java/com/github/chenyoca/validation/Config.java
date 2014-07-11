@@ -1,53 +1,43 @@
 package com.github.chenyoca.validation;
 
-import android.content.Context;
+import com.github.chenyoca.validation.supported.ChineseMobilePhoneRunner;
+import com.github.chenyoca.validation.supported.CreditCardRunner;
+import com.github.chenyoca.validation.supported.DigitsRunner;
+import com.github.chenyoca.validation.supported.EmailRunner;
+import com.github.chenyoca.validation.supported.EqualToRunner;
+import com.github.chenyoca.validation.supported.HTTPURLRunner;
+import com.github.chenyoca.validation.supported.HostRunner;
+import com.github.chenyoca.validation.supported.IPv4Runner;
+import com.github.chenyoca.validation.supported.LengthInMaxRunner;
+import com.github.chenyoca.validation.supported.LengthInMinRunner;
+import com.github.chenyoca.validation.supported.LengthInRangeRunner;
+import com.github.chenyoca.validation.supported.NotBlankRunner;
+import com.github.chenyoca.validation.supported.NumericRunner;
+import com.github.chenyoca.validation.supported.RequiredRunner;
+import com.github.chenyoca.validation.supported.TestRunner;
+import com.github.chenyoca.validation.supported.ValueInMaxRunner;
+import com.github.chenyoca.validation.supported.ValueInMinRunner;
+import com.github.chenyoca.validation.supported.ValueInRangeRunner;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.github.chenyoca.validation.supported.TestRunner;
-import com.github.chenyoca.validation.supported.runners.ChineseMobilePhoneRunner;
-import com.github.chenyoca.validation.supported.runners.CreditCardRunner;
-import com.github.chenyoca.validation.supported.runners.DigitsRunner;
-import com.github.chenyoca.validation.supported.runners.EmailRunner;
-import com.github.chenyoca.validation.supported.runners.EqualToRunner;
-import com.github.chenyoca.validation.supported.runners.HTTPURLRunner;
-import com.github.chenyoca.validation.supported.runners.HostRunner;
-import com.github.chenyoca.validation.supported.runners.IPv4Runner;
-import com.github.chenyoca.validation.supported.runners.LengthInMaxRunner;
-import com.github.chenyoca.validation.supported.runners.LengthInMinRunner;
-import com.github.chenyoca.validation.supported.runners.LengthInRangeRunner;
-import com.github.chenyoca.validation.supported.runners.NotBlankRunner;
-import com.github.chenyoca.validation.supported.runners.NumericRunner;
-import com.github.chenyoca.validation.supported.runners.RequiredRunner;
-import com.github.chenyoca.validation.supported.runners.ValueInMaxRunner;
-import com.github.chenyoca.validation.supported.runners.ValueInMinRunner;
-import com.github.chenyoca.validation.supported.runners.ValueInRangeRunner;
 
 /**
  * User: chenyoca@gmail.com
  * Date: 2014-06-25
  * Test configuration
  */
-public class Configuration {
+public class Config {
 
     public final List<TestRunner> runners = new ArrayList<TestRunner>();
-
-    private Context resContext;
-
-    private Configuration(Context c) {
-        this.resContext = c;
-    }
-
-
 
     /**
      * Make a configuration from build in types .
      * @param type Build in type .
      * @return Configuration instance .
      */
-    public static Configuration buildIn(Context c, BuildInTypes type){
-        return buildIn(c, null, type, 0, 0);
+    public static Config from(Types type){
+        return from(null, type, 0, 0);
     }
 
     /**
@@ -56,8 +46,8 @@ public class Configuration {
      * @param type Build in type .
      * @return Configuration instance .
      */
-    public static Configuration buildIn(Context c, String message, BuildInTypes type){
-        return buildIn(c, message, type, 0, 0);
+    public static Config from(String message, Types type){
+        return from(message, type, 0, 0);
     }
 
     /**
@@ -67,8 +57,8 @@ public class Configuration {
      * @param values Extra values for validate runner parameters.
      * @return Configuration instance .
      */
-    public static Configuration buildIn(Context c, String message, BuildInTypes type, int... values){
-        return new Configuration(c).add(message, type, values);
+    public static Config from(String message, Types type, int... values){
+        return new Config().add(message, type, values);
     }
 
     /**
@@ -77,8 +67,8 @@ public class Configuration {
      * @param values Extra values for validate runner parameters.
      * @return Configuration instance .
      */
-    public static Configuration buildIn(Context c, BuildInTypes type, int... values){
-        return buildIn(c, null, type, values);
+    public static Config from(Types type, int... values){
+        return from(null, type, values);
     }
 
     /**
@@ -87,8 +77,20 @@ public class Configuration {
      * @param values Extra values for validate runner parameters.
      * @return Configuration instance .
      */
-    public static Configuration buildIn(Context c, BuildInTypes type, double... values){
-        return buildIn(c, null, type, values);
+    public static Config from(Types type, double... values){
+        return from(null, type, values);
+    }
+
+
+    /**
+     * Make a configuration from build in types with values.
+     * @param message Message for validate failed.
+     * @param type Build in type .
+     * @param values Extra values for validate runner parameters.
+     * @return Configuration instance .
+     */
+    public static Config from(String message, Types type, double... values){
+        return new Config().add( message, type, values);
     }
 
     /**
@@ -98,19 +100,8 @@ public class Configuration {
      * @param values Extra values for validate runner parameters.
      * @return Configuration instance .
      */
-    public static Configuration buildIn(Context c, String message, BuildInTypes type, double... values){
-        return new Configuration(c).add( message, type, values);
-    }
-
-    /**
-     * Make a configuration from build in types with values.
-     * @param message Message for validate failed.
-     * @param type Build in type .
-     * @param values Extra values for validate runner parameters.
-     * @return Configuration instance .
-     */
-    public static Configuration buildIn(Context c, String message, BuildInTypes type, String... values){
-        return new Configuration(c).add(message, type, values);
+    public static Config from(String message, Types type, String... values){
+        return new Config().add(message, type, values);
     }
 
     /**
@@ -119,8 +110,8 @@ public class Configuration {
      * @param values Extra values for validate runner parameters.
      * @return Configuration instance .
      */
-    public static Configuration buildIn(Context c, BuildInTypes type, String... values){
-        return buildIn(c, null, type, values);
+    public static Config from(Types type, String... values){
+        return from(null, type, values);
     }
 
     /**
@@ -128,9 +119,9 @@ public class Configuration {
      * @param customTestRunner Custom test runner impl.
      * @return Configuration instance
      */
-    public static Configuration custom(Context c, TestRunner customTestRunner){
+    public static Config custom(TestRunner customTestRunner){
         if (customTestRunner == null) throw new IllegalArgumentException("Test Runner CANNOT BE NULL !!");
-        return new Configuration(c).add(customTestRunner);
+        return new Config().add(customTestRunner);
     }
 
     /**
@@ -138,7 +129,7 @@ public class Configuration {
      * @param customTestRunner Custom test runner impl.
      * @return Configuration instance.
      */
-    public Configuration add(TestRunner customTestRunner){
+    public Config add(TestRunner customTestRunner){
         if (customTestRunner != null){
             runners.add(customTestRunner);
         }
@@ -150,7 +141,7 @@ public class Configuration {
      * @param type Build in type .
      * @return Configuration instance
      */
-    public Configuration add(BuildInTypes type){
+    public Config add(Types type){
         return add(null, type, 0, 0);
     }
 
@@ -159,7 +150,7 @@ public class Configuration {
      * @param type Build in type .
      * @return Configuration instance
      */
-    public Configuration add(String message, BuildInTypes type){
+    public Config add(String message, Types type){
         return add( message, type,0, 0);
     }
 
@@ -168,7 +159,7 @@ public class Configuration {
      * @param type Build in type .
      * @return Configuration instance
      */
-    public Configuration add(BuildInTypes type, int... intValues){
+    public Config add(Types type, int... intValues){
         return add( null,type, intValues);
     }
 
@@ -177,7 +168,7 @@ public class Configuration {
      * @param type Build in type .
      * @return Configuration instance
      */
-    public Configuration add(BuildInTypes type, double... intValues){
+    public Config add(Types type, double... intValues){
         return add( null,type, intValues);
     }
 
@@ -186,7 +177,7 @@ public class Configuration {
      * @param type Build in type .
      * @return Configuration instance
      */
-    public Configuration add(BuildInTypes type, String... intValues){
+    public Config add(Types type, String... intValues){
         return add( null,type, intValues);
     }
 
@@ -195,7 +186,7 @@ public class Configuration {
      * @param type Build in type .
      * @return Configuration instance
      */
-    public Configuration add(String message, BuildInTypes type, int... intValues){
+    public Config add(String message, Types type, int... intValues){
         TestRunner r = runner(type);
         r.setParameters(message, intValues);
         return this;
@@ -208,7 +199,7 @@ public class Configuration {
      * @param strValues String values
      * @return Configuration instance
      */
-    public Configuration add(String message, BuildInTypes type, String... strValues){
+    public Config add(String message, Types type, String... strValues){
         TestRunner r = runner(type);
         r.setParameters(message, strValues);
         return this;
@@ -221,35 +212,35 @@ public class Configuration {
      * @param dValues Double values
      * @return Configuration instance
      */
-    public Configuration add(String message, BuildInTypes type, double... dValues){
+    public Config add(String message, Types type, double... dValues){
         TestRunner r = runner(type);
         r.setParameters(message, dValues);
         return this;
     }
 
-    private TestRunner runner(BuildInTypes type){
+    private TestRunner runner(Types type){
         TestRunner r;
         switch (type){
-            case ChineseMobilePhone: r = new ChineseMobilePhoneRunner(resContext); break;
-            case CreditCard: r = new CreditCardRunner(resContext); break;
-            case Digits: r = new DigitsRunner(resContext); break;
-            case Email: r = new EmailRunner(resContext); break;
-            case EqualTo: r = new EqualToRunner(resContext); break;
-            case Host: r = new HostRunner(resContext); break;
-            case HTTPURL: r = new HTTPURLRunner(resContext); break;
-            case IPv4: r = new IPv4Runner(resContext); break;
-            case LengthInMax: r = new LengthInMaxRunner(resContext); break;
-            case LengthInMin: r = new LengthInMinRunner(resContext); break;
-            case LengthInRange: r = new LengthInRangeRunner(resContext); break;
-            case NotBlank: r = new NotBlankRunner(resContext); break;
-            case Numeric: r = new NumericRunner(resContext); break;
-            case Required: r = new RequiredRunner(resContext); break;
-            case ValueInMax: r = new ValueInMaxRunner(resContext); break;
-            case ValueInMin: r = new ValueInMinRunner(resContext); break;
-            case ValueInRange: r = new ValueInRangeRunner(resContext); break;
+            case ChineseMobilePhone: r = new ChineseMobilePhoneRunner(); break;
+            case CreditCard: r = new CreditCardRunner(); break;
+            case Digits: r = new DigitsRunner(); break;
+            case Email: r = new EmailRunner(); break;
+            case EqualTo: r = new EqualToRunner(); break;
+            case Host: r = new HostRunner(); break;
+            case HTTPURL: r = new HTTPURLRunner(); break;
+            case IPv4: r = new IPv4Runner(); break;
+            case LengthInMax: r = new LengthInMaxRunner(); break;
+            case LengthInMin: r = new LengthInMinRunner(); break;
+            case LengthInRange: r = new LengthInRangeRunner(); break;
+            case NotBlank: r = new NotBlankRunner(); break;
+            case Numeric: r = new NumericRunner(); break;
+            case Required: r = new RequiredRunner(); break;
+            case ValueInMax: r = new ValueInMaxRunner(); break;
+            case ValueInMin: r = new ValueInMinRunner(); break;
+            case ValueInRange: r = new ValueInRangeRunner(); break;
             default: r = null; break;
         }
-        if (BuildInTypes.Required.equals(type)){
+        if (Types.Required.equals(type)){
             runners.add(0,r);
         }else{
             runners.add(r);

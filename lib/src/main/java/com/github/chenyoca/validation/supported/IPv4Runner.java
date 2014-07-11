@@ -1,9 +1,4 @@
-package com.github.chenyoca.validation.supported.runners;
-
-import android.content.Context;
-
-import com.github.chenyoca.validation.R;
-import com.github.chenyoca.validation.supported.TestRunner;
+package com.github.chenyoca.validation.supported;
 
 /**
  * User: chenyoca@gmail.com
@@ -14,13 +9,12 @@ public class IPv4Runner extends TestRunner{
 
     static final String IPV4_REGEX = "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
 
-    public IPv4Runner(Context c){
-        super(c, R.string.ipv4);
+    protected IPv4Runner(String message){
+        super(message);
     }
 
-    // For host runner
-    public IPv4Runner(Context c,int msgResId){
-        super(c, msgResId);
+    public IPv4Runner(){
+        super("请输入有效的IP地址！");
     }
 
     @Override

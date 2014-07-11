@@ -1,9 +1,4 @@
-package com.github.chenyoca.validation.supported.runners;
-
-import android.content.Context;
-
-import com.github.chenyoca.validation.R;
-import com.github.chenyoca.validation.supported.TestRunner;
+package com.github.chenyoca.validation.supported;
 
 /**
  * User: chenyoca@gmail.com
@@ -12,8 +7,8 @@ import com.github.chenyoca.validation.supported.TestRunner;
  */
 public class ValueInRangeRunner extends TestRunner{
 
-    public ValueInRangeRunner(Context c){
-        super(c, R.string.length_in_range);
+    public ValueInRangeRunner(){
+        super("请输入在[%0f,%0f]的数值！");
     }
 
     @Override

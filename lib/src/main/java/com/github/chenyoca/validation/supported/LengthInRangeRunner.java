@@ -1,9 +1,4 @@
-package com.github.chenyoca.validation.supported.runners;
-
-import android.content.Context;
-
-import com.github.chenyoca.validation.R;
-import com.github.chenyoca.validation.supported.TestRunner;
+package com.github.chenyoca.validation.supported;
 
 /**
  * User: chenyoca@gmail.com
@@ -12,8 +7,8 @@ import com.github.chenyoca.validation.supported.TestRunner;
  */
 public class LengthInRangeRunner extends TestRunner{
 
-    public LengthInRangeRunner(Context c){
-        super(c, R.string.length_in_range);
+    public LengthInRangeRunner(){
+        super("请输入长度在[%d,%d]之间的内容！");
     }
 
     @Override
