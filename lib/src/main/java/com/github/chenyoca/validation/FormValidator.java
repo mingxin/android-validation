@@ -28,7 +28,7 @@ import com.github.chenyoca.validation.supported.TestRunner;
 public class FormValidator {
 
     private String message;
-
+    private Display display;
     private ViewGroup form;
 
     public String getMessage(){
@@ -37,8 +37,31 @@ public class FormValidator {
 
     private SparseArray<Config> configs = new SparseArray<Config>();
 
+    public FormValidator(){
+        this(new Display() {
+            @Override
+            public void dismiss(EditText field) {
+                field.setError(null);
+            }
+
+            @Override
+            public void show(EditText field, String message) {
+                field.setError(message);
+            }
+        });
+    }
+
+    public FormValidator(Display display){
+        this.display = display;
+    }
+
     public FormValidator addField(int viewId,Types...types){
-        for (Types t : types)configs.append(viewId, Config.from(t));
+        if (types.length < 1) throw new IllegalArgumentException("Types array at less 1 parameter !");
+        Config s = new Config();
+        for (Types t : types){
+            s.add(t);
+        }
+        configs.append(viewId, s);
         return this;
     }
 
@@ -61,7 +84,7 @@ public class FormValidator {
      * Apply InputType to EditText.
      */
     public FormValidator applyTypeToView(){
-        checkBindedForm();
+        checkBindForm();
         int childrenCount = form.getChildCount();
         for (int i = 0; i < childrenCount; i++){
             View c = form.getChildAt(i);
@@ -102,12 +125,12 @@ public class FormValidator {
     }
 
     public boolean test(){
-        checkBindedForm();
+        checkBindForm();
         return testForm(form);
     }
 
     public boolean testAll(){
-        checkBindedForm();
+        checkBindForm();
         return testFormAll(form);
     }
 
@@ -126,7 +149,7 @@ public class FormValidator {
                 EditText item = (EditText) c;
                 Config conf = configs.get(item.getId());
                 if (conf == null) continue;
-                ResultWrapper rs = testField(item, conf);
+                ResultWrapper rs = testField(item, conf, display);
                 testPassed &= rs.passed;
                 message = rs.message;
                 if (! continueTest && ! testPassed) break;
@@ -143,45 +166,51 @@ public class FormValidator {
         return testForm(form, true);
     }
 
+    public void setDisplay(Display display){
+        this.display = display;
+    }
+
     /**
      * Test edit text field .
      * @param field Input field , a EditText view.
      * @param conf Test configuration .
      * @return Test result wrapper.
      */
-    public static ResultWrapper testField(EditText field, Config conf){
+    public static ResultWrapper testField(EditText field, Config conf, Display display){
         if (conf == null) return new ResultWrapper(false,"Field configuration CANNOT BE NULL !!");
         boolean passed = true;
         String message = null;
         CharSequence input = field.getText();
+        if (display != null) display.dismiss(field);
 
         // If required
         TestRunner firstRunner = conf.runners.get(0);
         if (firstRunner instanceof RequiredRunner){
             passed = firstRunner.test(input);
             message = firstRunner.getMessage();
-            field.setError(message);
         }else if (TextUtils.isEmpty(input)){
             return new ResultWrapper(true, "NO_INPUT_BUT_NOT_REQUIRED");
         }
-
-        if ( ! passed) return new ResultWrapper(false, message);
+        if ( ! passed){
+            if (display != null) display.show(field, message);
+            return new ResultWrapper(false, message);
+        }
 
         for (TestRunner r : conf.runners){
             if (r instanceof RequiredRunner) continue;
-            if ( ! (passed = r.test(input))){
-                message = r.getMessage();
-                field.setError(message);
+            passed = r.test(input);
+            message = r.getMessage();
+            System.out.println(">> Field test: "+ passed+", msg: "+message);
+            if ( !passed){
+                if (display != null) display.show(field, message);
                 break;
             }
         }
-
-        if (passed) field.setError(null);
-
+        System.out.println(">> Last test: "+ passed+", msg: "+message);
         return new ResultWrapper(passed, message);
     }
 
-    private void checkBindedForm(){
+    private void checkBindForm(){
         if (form == null) throw new IllegalStateException("Form is NULL ! Call 'bind(form)' First !");
     }
 }

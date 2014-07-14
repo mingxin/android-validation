@@ -6,13 +6,27 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.github.chenyoca.validation.Display;
 import com.github.chenyoca.validation.Types;
 import com.github.chenyoca.validation.Config;
 import com.github.chenyoca.validation.FormValidator;
 import com.github.chenyoca.validation.ResultWrapper;
 
 public class MainActivity extends Activity {
+
+    Display testDisplay = new Display() {
+        @Override
+        public void dismiss(EditText field) {
+
+        }
+
+        @Override
+        public void show(EditText field, String message) {
+            Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +43,7 @@ public class MainActivity extends Activity {
         commit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ResultWrapper rw = FormValidator.testField(test, conf);
+                ResultWrapper rw = FormValidator.testField(test, conf, testDisplay);
                 int color = rw.passed ?
                         android.R.color.holo_green_dark : android.R.color.holo_red_dark;
                 commit.setTextColor(getResources().getColor(color));
@@ -37,7 +51,7 @@ public class MainActivity extends Activity {
         });
 
         final LinearLayout form = (LinearLayout) findViewById(R.id.form);
-        final FormValidator fv = new FormValidator();
+        final FormValidator fv = new FormValidator(testDisplay);
         fv.addField(R.id.form_field_1, Types.ChineseMobilePhone, Types.Required);
         fv.addField(R.id.form_field_2, Types.CreditCard);
         fv.addField(R.id.form_field_3, Config.from(Types.Digits));
