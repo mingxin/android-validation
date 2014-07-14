@@ -175,6 +175,9 @@ public class FormValidator {
                 break;
             }
         }
+
+        if (passed) field.setError(null);
+
         return new ResultWrapper(passed, message);
     }
 
