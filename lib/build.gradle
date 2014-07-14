@@ -22,3 +22,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:19.+'
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
+
+apply from: 'maven_publish.gradle'
