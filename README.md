@@ -140,7 +140,7 @@ Add dependency
 
 ```java
 
-    // 1. 添加到已创建的Config中：
+    // 添加到已创建的Config中：
     
     conf.add(new TestRunner("出错时，此消息被返回并显示到EditText中") {
         @Override
@@ -150,15 +150,6 @@ Add dependency
         }
     });
     
-    // 2. 通过自定义TestRunner创建Config：
-    
-    Config.custom(new TestRunner("出错时，此消息被返回并显示到EditText中") {
-        @Override
-        public boolean test(CharSequence inputValue) {
-            return false;
-        }
-    })
-
 
 ```
 

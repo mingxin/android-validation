@@ -115,16 +115,6 @@ public class Config {
     }
 
     /**
-     * Make a configuration from custom test runner.
-     * @param customTestRunner Custom test runner impl.
-     * @return Configuration instance
-     */
-    public static Config custom(TestRunner customTestRunner){
-        if (customTestRunner == null) throw new IllegalArgumentException("Test Runner CANNOT BE NULL !!");
-        return new Config().add(customTestRunner);
-    }
-
-    /**
      * Add a custom test runner.
      * @param customTestRunner Custom test runner impl.
      * @return Configuration instance.
