@@ -233,13 +233,11 @@ public class FormValidator {
             if (r instanceof RequiredRunner) continue;
             passed = r.test(input);
             message = r.getMessage();
-            System.out.println(">> Field test: "+ passed+", msg: "+message);
             if ( !passed){
                 if (display != null) display.show(field, message);
                 break;
             }
         }
-        System.out.println(">> Last test: "+ passed+", msg: "+message);
         return new ResultWrapper(passed, message, String.valueOf(input));
     }
 

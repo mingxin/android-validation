@@ -31,6 +31,8 @@ public class Config {
 
     public final List<TestRunner> runners = new ArrayList<TestRunner>();
 
+    private Types lastAdded;
+
     /**
      * Make a configuration from build in types .
      * @param type Build in type .
@@ -208,7 +210,14 @@ public class Config {
         return this;
     }
 
+    public Config lazy(LazyValuesLoader loader){
+        TestRunner r = runners.get(runners.size() -1);
+        r.setLazyValuesLoader(loader);
+        return this;
+    }
+
     private TestRunner runner(Types type){
+        lastAdded = type;
         TestRunner r;
         switch (type){
             case ChineseMobilePhone: r = new ChineseMobilePhoneRunner(); break;

@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.github.chenyoca.validation.Display;
+import com.github.chenyoca.validation.LazyStringLoader;
 import com.github.chenyoca.validation.Types;
 import com.github.chenyoca.validation.Config;
 import com.github.chenyoca.validation.FormValidator;
@@ -56,7 +57,12 @@ public class MainActivity extends Activity {
         fv.addField(R.id.form_field_2, Types.CreditCard);
         fv.addField(R.id.form_field_3, Config.from(Types.Digits));
         fv.addField(R.id.form_field_4, Config.from(Types.Email));
-        fv.addField(R.id.form_field_5, Config.from(Types.EqualTo, "chenyoca"));
+        fv.addField(R.id.form_field_5, Config.from(Types.EqualTo).lazy(new LazyStringLoader() {
+            @Override
+            public String[] stringValues() {
+                return new String[]{"chenyoca"};
+            }
+        }));
         fv.addField(R.id.form_field_6, Config.from(Types.Host));
         fv.addField(R.id.form_field_7, Config.from(Types.HTTPURL));
         fv.addField(R.id.form_field_8, Config.from(Types.LengthInMax));

@@ -7,7 +7,6 @@ package com.github.chenyoca.validation.supported;
  */
 public class EqualToRunner extends TestRunner{
 
-
     public EqualToRunner(){
         super("请输入相同的内容！");
     }
