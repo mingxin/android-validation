@@ -37,7 +37,12 @@ public class FormValidator {
 
     private SparseArray<Config> configs = new SparseArray<Config>();
 
-    public FormValidator addField(Config config, int viewId){
+    public FormValidator addField(int viewId,Types...types){
+        for (Types t : types)configs.append(viewId, Config.from(t));
+        return this;
+    }
+
+    public FormValidator addField(int viewId, Config config){
         configs.append(viewId, config);
         return this;
     }
