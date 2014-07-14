@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.github.chenyoca.validation.Types;
@@ -22,38 +23,36 @@ public class MainActivity extends Activity {
         conf.add(Types.LengthInMax, 20);
         conf.add(Types.Email);
 
-        final android.widget.EditText test = (android.widget.EditText) findViewById(R.id.single_test);
+        final EditText test = (EditText) findViewById(R.id.single_test);
 
         final Button commit = (Button) findViewById(R.id.single_commit);
         commit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ResultWrapper rw = FormValidator.testField(test, conf);
-                if (rw.passed){
-                    commit.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
-                }else{
-                    commit.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
-                }
+                int color = rw.passed ?
+                        android.R.color.holo_green_dark : android.R.color.holo_red_dark;
+                commit.setTextColor(getResources().getColor(color));
             }
         });
 
         final LinearLayout form = (LinearLayout) findViewById(R.id.form);
         final FormValidator fv = new FormValidator();
-        fv.addField(Config.from(Types.ChineseMobilePhone), R.id.form_field_1);
-        fv.addField(Config.from(Types.CreditCard), R.id.form_field_2);
-        fv.addField(Config.from(Types.Digits), R.id.form_field_3);
-        fv.addField(Config.from(Types.Email), R.id.form_field_4);
-        fv.addField(Config.from(Types.EqualTo, "chenyoca"), R.id.form_field_5);
-        fv.addField(Config.from(Types.Host), R.id.form_field_6);
-        fv.addField(Config.from(Types.HTTPURL), R.id.form_field_7);
-        fv.addField(Config.from(Types.LengthInMax, 5), R.id.form_field_8);
-        fv.addField(Config.from(Types.LengthInMin, 4), R.id.form_field_9);
-        fv.addField(Config.from(Types.LengthInRange, 4, 8), R.id.form_field_10);
-        fv.addField(Config.from(Types.NotBlank), R.id.form_field_11);
-        fv.addField(Config.from(Types.Numeric), R.id.form_field_12);
-        fv.addField(Config.from(Types.ValueInMax, 100), R.id.form_field_13);
-        fv.addField(Config.from(Types.ValueInMin, 20.0), R.id.form_field_14);
-        fv.addField(Config.from(Types.ValueInRange, 18, 30), R.id.form_field_15);
+        fv.addField(R.id.form_field_1, Types.ChineseMobilePhone, Types.Required);
+        fv.addField(R.id.form_field_2, Types.CreditCard);
+        fv.addField(R.id.form_field_3, Config.from(Types.Digits));
+        fv.addField(R.id.form_field_4, Config.from(Types.Email));
+        fv.addField(R.id.form_field_5, Config.from(Types.EqualTo, "chenyoca"));
+        fv.addField(R.id.form_field_6, Config.from(Types.Host));
+        fv.addField(R.id.form_field_7, Config.from(Types.HTTPURL));
+        fv.addField(R.id.form_field_8, Config.from(Types.LengthInMax));
+        fv.addField(R.id.form_field_9, Config.from(Types.LengthInMin));
+        fv.addField(R.id.form_field_10,Config.from(Types.LengthInRange));
+        fv.addField(R.id.form_field_11,Config.from(Types.NotBlank));
+        fv.addField(R.id.form_field_12,Config.from(Types.Numeric));
+        fv.addField(R.id.form_field_13,Config.from(Types.ValueInMax, 100));
+        fv.addField(R.id.form_field_14,Config.from(Types.ValueInMin, 20.0));
+        fv.addField(R.id.form_field_15,Config.from(Types.ValueInRange, 18, 30));
 
         fv.bind(form)
           .applyTypeToView();
@@ -62,11 +61,9 @@ public class MainActivity extends Activity {
         formCommit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (fv.testFormAll(form)){
-                    formCommit.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
-                }else{
-                    formCommit.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
-                }
+                int color = fv.testFormAll(form) ?
+                        android.R.color.holo_green_dark : android.R.color.holo_red_dark;
+                formCommit.setTextColor(getResources().getColor(color));
             }
         });
 

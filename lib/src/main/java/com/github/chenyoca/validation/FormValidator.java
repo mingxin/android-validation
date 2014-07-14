@@ -37,7 +37,12 @@ public class FormValidator {
 
     private SparseArray<Config> configs = new SparseArray<Config>();
 
-    public FormValidator addField(Config config, int viewId){
+    public FormValidator addField(int viewId,Types...types){
+        for (Types t : types)configs.append(viewId, Config.from(t));
+        return this;
+    }
+
+    public FormValidator addField(int viewId, Config config){
         configs.append(viewId, config);
         return this;
     }
@@ -56,6 +61,7 @@ public class FormValidator {
      * Apply InputType to EditText.
      */
     public FormValidator applyTypeToView(){
+        checkBindedForm();
         int childrenCount = form.getChildCount();
         for (int i = 0; i < childrenCount; i++){
             View c = form.getChildAt(i);
@@ -63,24 +69,26 @@ public class FormValidator {
                 EditText item = (EditText) c;
                 Config conf = configs.get(item.getId());
                 if (conf == null) continue;
-                int inputType = 0;
+                int inputType = InputType.TYPE_CLASS_TEXT;
                 for (TestRunner r : conf.runners){
                     if (r instanceof ChineseMobilePhoneRunner){
                         inputType |= InputType.TYPE_CLASS_PHONE;
-                    }
-                    if (r instanceof CreditCardRunner || r instanceof NumericRunner){
+                    }else if (r instanceof CreditCardRunner || r instanceof NumericRunner){
                         inputType |= InputType.TYPE_CLASS_NUMBER;
                     }
+
                     if (r instanceof DigitsRunner){
                         inputType |= InputType.TYPE_NUMBER_FLAG_SIGNED;
                     }
+
                     if (r instanceof EmailRunner){
                         inputType |= InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS;
                     }
+
                     if (r instanceof HostRunner || r instanceof HTTPURLRunner || r instanceof IPv4Runner){
                         inputType |= InputType.TYPE_TEXT_VARIATION_URI;
                     }
-                    //
+
                     if (r instanceof LengthInMaxRunner){
                         item.setMaxHeight(r.iValue1);
                     }else if (r instanceof LengthInRangeRunner){
@@ -94,12 +102,12 @@ public class FormValidator {
     }
 
     public boolean test(){
-        if (form == null) throw new IllegalStateException("Form is NULL ! Call 'bind(form)' First !");
+        checkBindedForm();
         return testForm(form);
     }
 
     public boolean testAll(){
-        if (form == null) throw new IllegalStateException("Form is NULL ! Call 'bind(form)' First !");
+        checkBindedForm();
         return testFormAll(form);
     }
 
@@ -168,5 +176,9 @@ public class FormValidator {
             }
         }
         return new ResultWrapper(passed, message);
+    }
+
+    private void checkBindedForm(){
+        if (form == null) throw new IllegalStateException("Form is NULL ! Call 'bind(form)' First !");
     }
 }
