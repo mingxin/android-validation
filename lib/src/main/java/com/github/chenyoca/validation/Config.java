@@ -20,23 +20,33 @@ public class Config {
 
     private Config(){}
 
+    /**
+     * Build a config by type
+     * @param type Build in type
+     * @return Config instance
+     */
     public static Config build(Types type){
         Config c = new Config();
         c.add(type);
         return c;
     }
 
+    /**
+     * Build a config by a custom test runner
+     * @param runner Custom runner
+     * @return Config instance
+     */
     public static Config build(TestRunner runner){
         Config c = new Config();
         c.add(runner);
         return c;
     }
 
-    public Config custom(TestRunner runner){
-        add(runner);
-        return this;
-    }
-
+    /**
+     * Add a custom runner to config
+     * @param runner Custom runner
+     * @return Config instance
+     */
     public Config add(TestRunner runner){
         autoCommit();
         lastRunner = runner;
@@ -44,6 +54,7 @@ public class Config {
     }
 
     public Config add(Types type){
+        lastType = type;
         autoCommit();
         lastRunner = BuildInRunners.build(type);
         return this;

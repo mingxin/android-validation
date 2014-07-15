@@ -22,9 +22,8 @@ import com.github.chenyoca.validation.runners.RequiredRunner;
 import com.github.chenyoca.validation.runners.TestRunner;
 
 /**
- * User: chenyoca@gmail.com
+ * User: YooJia.Chen@gmail.com
  * Date: 2014-06-25
- * Test all children which is EditText in Layout.
  */
 public class AndroidValidator {
 
@@ -59,10 +58,10 @@ public class AndroidValidator {
     }
 
     /**
-     * Add a test field loader types and view id.
+     * Add test fields by types and view id.
      * @param viewId View id for the test field.
-     * @param types Types
-     * @return FormValidator instance.
+     * @param types Build in types
+     * @return AndroidValidator instance.
      */
     public AndroidValidator putField(int viewId, Types... types){
         if (types.length < 1) throw new IllegalArgumentException("Types array at less 1 parameter !");
@@ -75,10 +74,10 @@ public class AndroidValidator {
     }
 
     /**
-     * Add a test field loader config and view id.
+     * Add a test field with config and view id.
      * @param viewId View id for the test field.
      * @param config Config
-     * @return FormValidator instance.
+     * @return AndroidValidator instance.
      */
     public AndroidValidator putField(int viewId, Config config){
         configs.put(viewId, config);
@@ -86,9 +85,9 @@ public class AndroidValidator {
     }
 
     /**
-     * Bind a form for actions
+     * Bind a form for test actions
      * @param form Target form layout
-     * @return FormValidator instance.
+     * @return AndroidValidator instance.
      */
     public AndroidValidator bind(ViewGroup form){
         this.form = form;
@@ -97,8 +96,9 @@ public class AndroidValidator {
 
     /**
      * Apply InputType to EditText.
+     * @return AndroidValidator instance.
      */
-    public AndroidValidator applyTypeToView(){
+    public AndroidValidator applyInputType(){
         checkBindForm();
         int childrenCount = form.getChildCount();
         for (int i = 0; i < childrenCount; i++){
@@ -110,24 +110,17 @@ public class AndroidValidator {
                 int inputType = InputType.TYPE_CLASS_TEXT;
                 for (TestRunner r : conf.runners){
                     if (r instanceof ChineseMobilePhoneRunner){
-                        inputType |= InputType.TYPE_CLASS_PHONE;
+                        inputType = InputType.TYPE_CLASS_PHONE;
                     }else if (r instanceof CreditCardRunner || r instanceof NumericRunner){
-                        inputType |= InputType.TYPE_CLASS_NUMBER;
-                    }
-
-                    if (r instanceof DigitsRunner){
-                        inputType |= InputType.TYPE_NUMBER_FLAG_SIGNED;
-                    }
-
-                    if (r instanceof EmailRunner){
-                        inputType |= InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS;
-                    }
-
-                    if (r instanceof HostRunner || r instanceof HTTPURLRunner || r instanceof IPv4Runner){
-                        inputType |= InputType.TYPE_TEXT_VARIATION_URI;
-                    }
-
-                    if (r instanceof LengthInMaxRunner){
+                        inputType = InputType.TYPE_CLASS_NUMBER;
+                    }else if (r instanceof DigitsRunner){
+                        inputType = InputType.TYPE_NUMBER_FLAG_SIGNED;
+                    }else if (r instanceof EmailRunner){
+                        inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS;
+                        item.setSingleLine(true);
+                    }else if (r instanceof HostRunner || r instanceof HTTPURLRunner || r instanceof IPv4Runner){
+                        inputType = InputType.TYPE_TEXT_VARIATION_URI;
+                    }else if (r instanceof LengthInMaxRunner){
                         item.setMaxHeight(r.iValue1);
                     }else if (r instanceof LengthInRangeRunner){
                         item.setMaxHeight(r.iValue2);
@@ -140,7 +133,24 @@ public class AndroidValidator {
     }
 
     /**
-     * Test all fields, and get a boolean reset , SHOP test when got a test failed.
+     * Set all fields `single line`
+     * @return AndroidValidator instance.
+     */
+    public AndroidValidator singleLine(){
+        checkBindForm();
+        int childrenCount = form.getChildCount();
+        for (int i = 0; i < childrenCount; i++){
+            View c = form.getChildAt(i);
+            if (c instanceof EditText){
+                EditText item = (EditText) c;
+                item.setSingleLine(true);
+            }
+        }
+        return this;
+    }
+
+    /**
+     * Test all fields, and get a boolean result , STOP testing when got a test failed.
      * @return True if passed, false otherwise.
      */
     public boolean test(){
@@ -192,10 +202,21 @@ public class AndroidValidator {
         return testForm(form, true);
     }
 
+    /**
+     * Get value by view id.
+     * @param viewId View Id.
+     * @return String value in view.
+     */
     public String getValue(int viewId){
         return values.get(viewId);
     }
 
+    /**
+     * Get value by view id from parent view.
+     * @param parent Parent view
+     * @param viewId view Id
+     * @return String value in view.
+     */
     public String getValue(View parent, int viewId){
         return ((TextView)parent.findViewById(viewId)).getText().toString();
     }
@@ -210,7 +231,7 @@ public class AndroidValidator {
 
     /**
      * Test edit text field .
-     * @param field Input field , a EditText view.
+     * @param field Input field, a EditText view.
      * @param conf Test configuration .
      * @return Test result wrapper.
      */

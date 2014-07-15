@@ -70,7 +70,7 @@ public class MainActivity extends Activity {
         av.putField(R.id.form_field_15, Config.build(Types.ValueInRange).values(18, 30).commit());
 
         av.bind(form)
-          .applyTypeToView();
+          .applyInputType();
 
         final Button formCommit = (Button) findViewById(R.id.form_commit);
         formCommit.setOnClickListener(new View.OnClickListener() {

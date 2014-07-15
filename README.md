@@ -29,7 +29,7 @@ Add dependency
 ```groovy
 
     dependencies {
-        compile 'com.github.chenyoca:android-validation:3.0'
+        compile 'com.github.chenyoca:android-validation:2.0-SNAPSHOT'
     }
 
 ```
