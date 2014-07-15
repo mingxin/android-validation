@@ -71,7 +71,7 @@
             android:id="@+id/form_field_5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="必须与“单项校验”输入框相同"
+            android:hint="必须与“电子邮件”输入框相同"
             />
 
         <EditText

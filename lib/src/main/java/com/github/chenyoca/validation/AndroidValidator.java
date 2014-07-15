@@ -65,9 +65,9 @@ public class AndroidValidator {
      */
     public AndroidValidator putField(int viewId, Types... types){
         if (types.length < 1) throw new IllegalArgumentException("Types array at less 1 parameter !");
-        Config s = Config.build(types[0]).commit();
+        Config s = Config.build(types[0]).apply();
         for (int i=1;i<types.length;i++){
-            s.add(types[i]).commit();
+            s.add(types[i]).apply();
         }
         configs.put(viewId, s);
         return this;

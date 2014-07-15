@@ -85,7 +85,7 @@ public class Config {
         return this;
     }
 
-    public Config commit(){
+    public Config apply(){
         if (Types.Required.equals(lastType)){
             runners.add(0,lastRunner);
         }else{
@@ -96,7 +96,7 @@ public class Config {
     }
 
     private void autoCommit(){
-        if (lastRunner != null) commit();
+        if (lastRunner != null) apply();
     }
 
 }

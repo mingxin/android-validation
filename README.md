@@ -62,15 +62,16 @@ Add dependency
 ```java
 
     // 通过build, add, custom接口来添加校验规则，
-    // 每条规则后，记得调用 commit() 确认规则配置完成。
+    // Apply 用于每次添加校验规则，在 add() 方法中，会自动将保存前一条配置，
+    // 但在最后一条规则配置后，记得调用 apply() 确认规则配置完成。
 
-    final Config conf = Config.build(Types.Required).message("必填选项").commit();
-    conf.add(Types.LengthInMax).values(20).commit();
-    conf.add(Types.Email).commit();
+    final Config conf = Config.build(Types.Required).message("必填选项").apply();
+    conf.add(Types.LengthInMax).values(20).apply();
+    conf.add(Types.Email).apply();
     
 ```
 
-**!!!! 最后添加的规则一定要调用 commit() !!!!**
+**!!!! 最后添加的规则一定要调用 apply() !!!!**
 
 #### 2. 对EditText执行校验
 
@@ -91,20 +92,20 @@ Add dependency
 
     final FormValidator fv = new FormValidator();
     // FormValidator.addField(*Config instance*, *view id for EditText*)
-    final Config conf = Config.build(Types.Required).message("必填选项").commit();
-    conf.add(Types.LengthInMax).values(20).commit();
-    conf.add(Types.Email).commit();
+    final Config conf = Config.build(Types.Required).message("必填选项").apply();
+    conf.add(Types.LengthInMax).values(20).apply();
+    conf.add(Types.Email).apply();
 
     final EditText test = (EditText) findViewById(R.id.single_test);
 
-    final Button commit = (Button) findViewById(R.id.single_commit);
-    commit.setOnClickListener(new View.OnClickListener() {
+    final Button apply = (Button) findViewById(R.id.single_apply);
+    apply.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             ResultWrapper rw = AndroidValidator.testField(test, conf, testDisplay);
             int color = rw.passed ?
                     android.R.color.holo_green_dark : android.R.color.holo_red_dark;
-            commit.setTextColor(getResources().getColor(color));
+            apply.setTextColor(getResources().getColor(color));
         }
     });
 
@@ -115,7 +116,7 @@ Add dependency
     av.putField(R.id.form_field_2, Types.CreditCard);
     av.putField(R.id.form_field_3, Types.Digits);
     av.putField(R.id.form_field_4, Types.Email);
-    av.putField(R.id.form_field_5, Config.build(Types.EqualTo).loader(new EditTextLazyLoader(test)).commit());
+    av.putField(R.id.form_field_5, Config.build(Types.EqualTo).loader(new EditTextLazyLoader(test)).apply());
     av.putField(R.id.form_field_6, Types.Host);
     av.putField(R.id.form_field_7, Types.HTTPURL);
     av.putField(R.id.form_field_8, Types.LengthInMax);
@@ -123,9 +124,9 @@ Add dependency
     av.putField(R.id.form_field_10, Types.LengthInRange);
     av.putField(R.id.form_field_11, Types.NotBlank);
     av.putField(R.id.form_field_12, Types.Numeric);
-    av.putField(R.id.form_field_13, Config.build(Types.ValueInMax).values(100).commit());
-    av.putField(R.id.form_field_14, Config.build(Types.ValueInMin).values(20).commit());
-    av.putField(R.id.form_field_15, Config.build(Types.ValueInRange).values(18, 30).commit());
+    av.putField(R.id.form_field_13, Config.build(Types.ValueInMax).values(100).apply());
+    av.putField(R.id.form_field_14, Config.build(Types.ValueInMin).values(20).apply());
+    av.putField(R.id.form_field_15, Config.build(Types.ValueInRange).values(18, 30).apply());
         
 ```
 
