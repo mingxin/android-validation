@@ -1,21 +1,21 @@
-package com.github.chenyoca.validation.supported;
+package com.github.chenyoca.validation.runners;
 
-import com.github.chenyoca.validation.LazyValuesLoader;
+import com.github.chenyoca.validation.LazyLoader;
 
 import java.util.regex.Pattern;
 
 /**
- * AUTH: chenyoca (chenyoca@gmail.com)
+ * AUTH: chenyoca (Yoojia.Chen@gmail.com)
  * DATE: 2014-06-25
  * Test runner.
  */
 public abstract class TestRunner {
 
-    protected static final int USING_INT = 0;
-    protected static final int USING_STR = 1;
-    protected static final int USING_DOU = 2;
+    protected static final int USING_INTEGER_VALUES = 0;
+    protected static final int USING_STRING_VALUES = 1;
+    protected static final int USING_DOUBLE_VALUES = 2;
 
-    protected int usingType = -1;
+    protected int usingValuesType = -1;
 
     protected String message;
 
@@ -28,7 +28,7 @@ public abstract class TestRunner {
     protected String sValue1 = null;
     protected String sValue2 = null;
 
-    private LazyValuesLoader lazyValues;
+    private LazyLoader lazyLoader;
 
     public TestRunner(String message){
         this.message = message;
@@ -38,8 +38,8 @@ public abstract class TestRunner {
 
     protected boolean dispatch(CharSequence inputValue){
         performLazyLoader();
-        switch (usingType){
-            case USING_INT:
+        switch (usingValuesType){
+            case USING_INTEGER_VALUES:
                 if (message != null) message = String.format(message, iValue1, iValue2);
                 int iInputValue = 0;
                 try{
@@ -48,7 +48,8 @@ public abstract class TestRunner {
                     message = e.getMessage();
                 }
                 return testIntValue(iInputValue, iValue1,iValue2);
-            case USING_DOU:
+
+            case USING_DOUBLE_VALUES:
                 if (message != null) message = String.format(message, dValue1, dValue2);
                 double dInputValue = 0;
                 try{
@@ -57,21 +58,23 @@ public abstract class TestRunner {
                     message = e.getMessage();
                 }
                 return testDoubleValue(dInputValue, dValue1, dValue2);
-            case USING_STR:
+
+            case USING_STRING_VALUES:
                 if (message != null) message = String.format(message, sValue1, sValue2);
                 return testStringValue(String.valueOf(inputValue), sValue1, sValue2);
+
             default: return false;
         }
     }
 
     private void performLazyLoader(){
-        if (lazyValues != null){
-            int[] iVs = lazyValues.intValues();
-            double[] dVs = lazyValues.doubleValues();
-            String[] sVs = lazyValues.stringValues();
+        if (lazyLoader != null){
+            int[] iVs = lazyLoader.intValues();
+            double[] dVs = lazyLoader.doubleValues();
+            String[] sVs = lazyLoader.stringValues();
 
             if (iVs.length != 0) {
-                usingType = USING_INT;
+                usingValuesType = USING_INTEGER_VALUES;
                 if (iVs.length == 2){
                     iValue1 = iVs[0];
                     iValue2 = iVs[1];
@@ -81,7 +84,7 @@ public abstract class TestRunner {
             }
 
             if (dVs.length != 0){
-                usingType = USING_DOU;
+                usingValuesType = USING_DOUBLE_VALUES;
                 if (dVs.length == 2){
                     dValue1 = dVs[0];
                     dValue2 = dVs[1];
@@ -91,7 +94,7 @@ public abstract class TestRunner {
             }
 
             if (sVs.length != 0){
-                usingType = USING_STR;
+                usingValuesType = USING_STRING_VALUES;
                 if (sVs.length == 2){
                     sValue1 = sVs[0];
                     sValue1 = sVs[1];
@@ -113,18 +116,20 @@ public abstract class TestRunner {
     }
 
     public String getMessage(){
-        if (message == null) return "";
-        return message;
+        return message == null? "" : message;
     }
 
-    public void setLazyValuesLoader(LazyValuesLoader lazyValues){
-        this.lazyValues = lazyValues;
+    public void setLazyLoader(LazyLoader lazyloader){
+        this.lazyLoader = lazyloader;
     }
 
-    public void setParameters(String message, int... values){
-        usingType = USING_INT;
+    public void setMessage(String message){
         if (message != null) this.message = message;
-        if (values != null){
+    }
+
+    public void setValues(int... values){
+        usingValuesType = USING_INTEGER_VALUES;
+        if (values.length > 0){
             if ( 1 == values.length){
                 this.iValue1 = values[0];
             }else if ( 2 == values.length){
@@ -134,10 +139,9 @@ public abstract class TestRunner {
         }
     }
 
-    public void setParameters(String message, String... values){
-        usingType = USING_STR;
-        if (message != null) this.message = message;
-        if (values != null){
+    public void setValues(String... values){
+        usingValuesType = USING_STRING_VALUES;
+        if (values.length > 0){
             if ( 1 == values.length){
                 this.sValue1 = values[0];
             }else if ( 2 == values.length){
@@ -147,10 +151,9 @@ public abstract class TestRunner {
         }
     }
 
-    public void setParameters(String message, double... values){
-        usingType = USING_DOU;
-        if (message != null) this.message = message;
-        if (values != null){
+    public void setValues(double... values){
+        usingValuesType = USING_DOUBLE_VALUES;
+        if (values.length > 0){
             if ( 1 == values.length){
                 this.dValue1 = values[0];
             }else if ( 2 == values.length){

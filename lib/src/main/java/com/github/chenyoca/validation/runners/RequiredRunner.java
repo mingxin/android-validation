@@ -1,4 +1,4 @@
-package com.github.chenyoca.validation.supported;
+package com.github.chenyoca.validation.runners;
 
 import android.text.TextUtils;
 

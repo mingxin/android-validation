@@ -5,7 +5,7 @@ package com.github.chenyoca.validation;
  * YooJia.Chen@gmail.com
  * 2014-07-14
  */
-public interface LazyValuesLoader {
+public interface LazyLoader {
     int[] intValues();
     double[] doubleValues();
     String[] stringValues();

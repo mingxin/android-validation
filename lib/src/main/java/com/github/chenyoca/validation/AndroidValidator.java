@@ -7,25 +7,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.github.chenyoca.validation.supported.ChineseMobilePhoneRunner;
-import com.github.chenyoca.validation.supported.CreditCardRunner;
-import com.github.chenyoca.validation.supported.DigitsRunner;
-import com.github.chenyoca.validation.supported.EmailRunner;
-import com.github.chenyoca.validation.supported.HTTPURLRunner;
-import com.github.chenyoca.validation.supported.HostRunner;
-import com.github.chenyoca.validation.supported.IPv4Runner;
-import com.github.chenyoca.validation.supported.LengthInMaxRunner;
-import com.github.chenyoca.validation.supported.LengthInRangeRunner;
-import com.github.chenyoca.validation.supported.NumericRunner;
-import com.github.chenyoca.validation.supported.RequiredRunner;
-import com.github.chenyoca.validation.supported.TestRunner;
+import com.github.chenyoca.validation.runners.ChineseMobilePhoneRunner;
+import com.github.chenyoca.validation.runners.CreditCardRunner;
+import com.github.chenyoca.validation.runners.DigitsRunner;
+import com.github.chenyoca.validation.runners.EmailRunner;
+import com.github.chenyoca.validation.runners.HTTPURLRunner;
+import com.github.chenyoca.validation.runners.HostRunner;
+import com.github.chenyoca.validation.runners.IPv4Runner;
+import com.github.chenyoca.validation.runners.LengthInMaxRunner;
+import com.github.chenyoca.validation.runners.LengthInRangeRunner;
+import com.github.chenyoca.validation.runners.NumericRunner;
+import com.github.chenyoca.validation.runners.RequiredRunner;
+import com.github.chenyoca.validation.runners.TestRunner;
 
 /**
  * User: chenyoca@gmail.com
  * Date: 2014-06-25
  * Test all children which is EditText in Layout.
  */
-public class FormValidator {
+public class AndroidValidator {
 
     private String message;
     private Display display;
@@ -39,7 +39,7 @@ public class FormValidator {
 
     private SparseArray<Config> configs = new SparseArray<Config>();
 
-    public FormValidator(){
+    public AndroidValidator(){
         this(new Display() {
             @Override
             public void dismiss(EditText field) {
@@ -53,34 +53,34 @@ public class FormValidator {
         });
     }
 
-    public FormValidator(Display display){
+    public AndroidValidator(Display display){
         this.display = display;
     }
 
     /**
-     * Add a test field with types and view id.
+     * Add a test field loader types and view id.
      * @param viewId View id for the test field.
      * @param types Types
      * @return FormValidator instance.
      */
-    public FormValidator addField(int viewId,Types...types){
+    public AndroidValidator putField(int viewId, Types... types){
         if (types.length < 1) throw new IllegalArgumentException("Types array at less 1 parameter !");
-        Config s = new Config();
-        for (Types t : types){
-            s.add(t);
+        Config s = Config.build(types[0]).commit();
+        for (int i=1;i<types.length;i++){
+            s.add(types[i]).commit();
         }
-        configs.append(viewId, s);
+        configs.put(viewId, s);
         return this;
     }
 
     /**
-     * Add a test field with config and view id.
+     * Add a test field loader config and view id.
      * @param viewId View id for the test field.
      * @param config Config
      * @return FormValidator instance.
      */
-    public FormValidator addField(int viewId, Config config){
-        configs.append(viewId, config);
+    public AndroidValidator putField(int viewId, Config config){
+        configs.put(viewId, config);
         return this;
     }
 
@@ -89,7 +89,7 @@ public class FormValidator {
      * @param form Target form layout
      * @return FormValidator instance.
      */
-    public FormValidator bind(ViewGroup form){
+    public AndroidValidator bind(ViewGroup form){
         this.form = form;
         return this;
     }
@@ -97,7 +97,7 @@ public class FormValidator {
     /**
      * Apply InputType to EditText.
      */
-    public FormValidator applyTypeToView(){
+    public AndroidValidator applyTypeToView(){
         checkBindForm();
         int childrenCount = form.getChildCount();
         for (int i = 0; i < childrenCount; i++){

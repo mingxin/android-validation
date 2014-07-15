@@ -1,4 +1,4 @@
-package com.github.chenyoca.validation.supported;
+package com.github.chenyoca.validation.runners;
 
 import android.text.TextUtils;
 
@@ -18,7 +18,7 @@ public class NumericRunner extends TestRunner{
         return isNumeric(String.valueOf(inputValue));
     }
 
-    // implements from apache common utils
+    // implements commit apache common utils
     public static boolean isNumeric(String input){
         if("null".equalsIgnoreCase(input) || TextUtils.isEmpty(input)){
             return false;
@@ -29,7 +29,7 @@ public class NumericRunner extends TestRunner{
         boolean hasDecPoint = false;
         boolean allowSigns = false;
         boolean foundDigit = false;
-        // deal with any possible sign up front
+        // deal loader any possible sign up front
         int start = (chars[0] == '-') ? 1 : 0;
         if (sz > start + 1) {
             if (chars[start] == '0' && chars[start + 1] == 'x') {
@@ -49,7 +49,7 @@ public class NumericRunner extends TestRunner{
             }
         }
         sz--; // don't want to loop to the last char, check it afterwords
-        // for type qualifiers
+        // for build qualifiers
         int i = start;
         // loop to the next to last char or to the last char if we need another digit to
         // make a valid numeric (e.g. chars[0..5] = "1234E")
@@ -88,7 +88,7 @@ public class NumericRunner extends TestRunner{
         }
         if (i < chars.length) {
             if (chars[i] >= '0' && chars[i] <= '9') {
-                // no type qualifier, OK
+                // no build qualifier, OK
                 return true;
             }
             if (chars[i] == 'e' || chars[i] == 'E') {
@@ -104,7 +104,7 @@ public class NumericRunner extends TestRunner{
             }
             if (chars[i] == 'l'
                     || chars[i] == 'L') {
-                // not allowing L with an exponent
+                // not allowing L loader an exponent
                 return foundDigit && !hasExp;
             }
             // last character is illegal

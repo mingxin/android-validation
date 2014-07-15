@@ -24,15 +24,10 @@ Add dependency
 ```groovy
 
     dependencies {
-        compile 'com.github.chenyoca:android-validation:2.0'
+        compile 'com.github.chenyoca:android-validation:3.0'
     }
 
 ```
-
-### 将项目打包并发布到Sonatype的命令：
-
-> ./gradlew clean uploadArchives -PUsingSonatype
-
 ## 已内置支持的校验方式
 
 * **Required** (必填)
@@ -62,11 +57,16 @@ Add dependency
 
 ```java
 
-    Config conf = Config.from(Types.Required, "必填选项！");
-    conf.add(Types.LengthInMax, 20);
-    conf.add(Types.Email);
+    // 通过build, add, custom接口来添加校验规则，
+    // 每条规则后，记得调用 commit() 确认规则配置完成。
+
+    final Config conf = Config.build(Types.Required).message("必填选项").commit();
+    conf.add(Types.LengthInMax).values(20).commit();
+    conf.add(Types.Email).commit();
     
 ```
+
+**!!!! 最后添加的规则一定要调用 commit() !!!!**
 
 #### 2. 对EditText执行校验
 
@@ -87,26 +87,41 @@ Add dependency
 
     final FormValidator fv = new FormValidator();
     // FormValidator.addField(*Config instance*, *view id for EditText*)
-    final FormValidator fv = new FormValidator();
-    // 指定多种类型
-    fv.addField(R.id.form_field_1, Types.ChineseMobilePhone, Types.Required);
-    // 指定一种类型
-    fv.addField(R.id.form_field_2, Types.CreditCard);
+    final Config conf = Config.build(Types.Required).message("必填选项").commit();
+    conf.add(Types.LengthInMax).values(20).commit();
+    conf.add(Types.Email).commit();
 
-    // 直接指定校验配置
-    fv.addField(R.id.form_field_3, Config.from(Types.Digits));
-    fv.addField(R.id.form_field_4, Config.from(Types.Email));
-    fv.addField(R.id.form_field_5, Config.from(Types.EqualTo, "chenyoca"));
-    fv.addField(R.id.form_field_6, Config.from(Types.Host));
-    fv.addField(R.id.form_field_7, Config.from(Types.HTTPURL));
-    fv.addField(R.id.form_field_8, Config.from(Types.LengthInMax));
-    fv.addField(R.id.form_field_9, Config.from(Types.LengthInMin));
-    fv.addField(R.id.form_field_10,Config.from(Types.LengthInRange));
-    fv.addField(R.id.form_field_11,Config.from(Types.NotBlank));
-    fv.addField(R.id.form_field_12,Config.from(Types.Numeric));
-    fv.addField(R.id.form_field_13,Config.from(Types.ValueInMax, 100));
-    fv.addField(R.id.form_field_14,Config.from(Types.ValueInMin, 20.0));
-    fv.addField(R.id.form_field_15,Config.from(Types.ValueInRange, 18, 30));
+    final EditText test = (EditText) findViewById(R.id.single_test);
+
+    final Button commit = (Button) findViewById(R.id.single_commit);
+    commit.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            ResultWrapper rw = AndroidValidator.testField(test, conf, testDisplay);
+            int color = rw.passed ?
+                    android.R.color.holo_green_dark : android.R.color.holo_red_dark;
+            commit.setTextColor(getResources().getColor(color));
+        }
+    });
+
+    final LinearLayout form = (LinearLayout) findViewById(R.id.form);
+    final AndroidValidator av = new AndroidValidator(testDisplay);
+
+    av.putField(R.id.form_field_1, Types.ChineseMobilePhone, Types.Required);
+    av.putField(R.id.form_field_2, Types.CreditCard);
+    av.putField(R.id.form_field_3, Types.Digits);
+    av.putField(R.id.form_field_4, Types.Email);
+    av.putField(R.id.form_field_5, Config.build(Types.EqualTo).loader(new EditTextLazyLoader(test)).commit());
+    av.putField(R.id.form_field_6, Types.Host);
+    av.putField(R.id.form_field_7, Types.HTTPURL);
+    av.putField(R.id.form_field_8, Types.LengthInMax);
+    av.putField(R.id.form_field_9, Types.LengthInMin);
+    av.putField(R.id.form_field_10, Types.LengthInRange);
+    av.putField(R.id.form_field_11, Types.NotBlank);
+    av.putField(R.id.form_field_12, Types.Numeric);
+    av.putField(R.id.form_field_13, Config.build(Types.ValueInMax).values(100).commit());
+    av.putField(R.id.form_field_14, Config.build(Types.ValueInMin).values(20).commit());
+    av.putField(R.id.form_field_15, Config.build(Types.ValueInRange).values(18, 30).commit());
         
 ```
 
@@ -175,3 +190,12 @@ Add dependency
 ### 将校验条件应用到EditText中
 
 如“最大长度”、“邮件地址”等校验条件，可以将EditText的输入类型自动切换至相应类型。
+
+### 获取EditText的值
+
+```java
+
+    String username = validator.getValue(R.id.form_field_1);
+
+```
+

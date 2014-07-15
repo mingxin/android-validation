@@ -1,4 +1,4 @@
-package com.github.chenyoca.validation.supported;
+package com.github.chenyoca.validation.runners;
 
 /**
  * User: chenyoca@gmail.com
@@ -13,7 +13,7 @@ public class LengthInMaxRunner extends TestRunner{
 
     @Override
     public boolean test(CharSequence inputValue) {
-        if (usingType != USING_INT) throw new IllegalArgumentException("LengthInRange Test ONLY accept int parameters!");
+        if (usingValuesType != USING_INTEGER_VALUES) throw new IllegalArgumentException("LengthInRange Test ONLY accept int parameters!");
         if (message != null) message = String.format(message, iValue1);
         int maxLength = iValue1;
         return inputValue.length() <= maxLength;

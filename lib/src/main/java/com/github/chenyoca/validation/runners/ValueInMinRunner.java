@@ -1,14 +1,14 @@
-package com.github.chenyoca.validation.supported;
+package com.github.chenyoca.validation.runners;
 
 /**
  * User: chenyoca@gmail.com
  * Date: 2014-06-26
- * Equal to a value
+ * Value in max
  */
-public class EqualToRunner extends TestRunner{
+public class ValueInMinRunner extends TestRunner{
 
-    public EqualToRunner(){
-        super("请输入相同的内容！");
+    public ValueInMinRunner(){
+        super("请输入大于%0f的数值！");
     }
 
     @Override
@@ -18,16 +18,16 @@ public class EqualToRunner extends TestRunner{
 
     @Override
     protected boolean testIntValue(int inputValue, int val1, int val2) {
-        return inputValue == val1;
+        return inputValue >= val1;
     }
 
     @Override
     protected boolean testDoubleValue(double inputValue, double val1, double val2) {
-        return inputValue == val2;
+        return inputValue >= val1;
     }
 
     @Override
     protected boolean testStringValue(String inputValue, String val1, String bal2) {
-        return inputValue.equals(val1);
+        throw new IllegalArgumentException("ValueInMin Test ONLY accept int/double/float parameters!");
     }
 }
