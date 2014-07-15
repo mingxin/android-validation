@@ -24,4 +24,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:19.+'
 }
 
-apply from: 'https://raw.githubusercontent.com/chenyoca/gradle_publish/master/publish_aar.gradle'
+//apply from: 'https://raw.githubusercontent.com/chenyoca/gradle_publish/master/publish_aar.gradle'
+apply from: 'publish.gradle'

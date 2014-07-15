@@ -6,6 +6,7 @@ import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.github.chenyoca.validation.runners.ChineseMobilePhoneRunner;
 import com.github.chenyoca.validation.runners.CreditCardRunner;
@@ -85,7 +86,7 @@ public class AndroidValidator {
     }
 
     /**
-     * Bind a form for action
+     * Bind a form for actions
      * @param form Target form layout
      * @return FormValidator instance.
      */
@@ -193,6 +194,10 @@ public class AndroidValidator {
 
     public String getValue(int viewId){
         return values.get(viewId);
+    }
+
+    public String getValue(View parent, int viewId){
+        return ((TextView)parent.findViewById(viewId)).getText().toString();
     }
 
     /**

@@ -28,6 +28,6 @@ public class ValueInMinRunner extends TestRunner{
 
     @Override
     protected boolean testStringValue(String inputValue, String val1, String bal2) {
-        throw new IllegalArgumentException("ValueInMin Test ONLY accept int/double/float parameters!");
+        throw new IllegalArgumentException("MinValue Test ONLY accept int/double/float parameters!");
     }
 }

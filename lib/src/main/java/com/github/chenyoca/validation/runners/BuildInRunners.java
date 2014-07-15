@@ -18,16 +18,16 @@ public class BuildInRunners {
             case Email: runner = new EmailRunner(); break;
             case EqualTo: runner = new EqualToRunner(); break;
             case Host: runner = new HostRunner(); break;
-            case HTTPURL: runner = new HTTPURLRunner(); break;
+            case URL: runner = new HTTPURLRunner(); break;
             case IPv4: runner = new IPv4Runner(); break;
-            case LengthInMax: runner = new LengthInMaxRunner(); break;
-            case LengthInMin: runner = new LengthInMinRunner(); break;
+            case MaxLength: runner = new LengthInMaxRunner(); break;
+            case MinLength: runner = new LengthInMinRunner(); break;
             case LengthInRange: runner = new LengthInRangeRunner(); break;
             case NotBlank: runner = new NotBlankRunner(); break;
             case Numeric: runner = new NumericRunner(); break;
             case Required: runner = new RequiredRunner(); break;
-            case ValueInMax: runner = new ValueInMaxRunner(); break;
-            case ValueInMin: runner = new ValueInMinRunner(); break;
+            case MaxValue: runner = new ValueInMaxRunner(); break;
+            case MinValue: runner = new ValueInMinRunner(); break;
             case ValueInRange: runner = new ValueInRangeRunner(); break;
             default: runner = null; break;
         }

@@ -2,6 +2,11 @@
 
 简单易用的Android校验库。
 
+这是一个简单Android校验库，按配置来验证用户输入的表单信息。
+只需要几行代码，即可验证用户输入，并且将验证错误反馈给用户。
+它内置了大量常用的验证类型，足以满足你的功能需求。
+它还有一个可扩展的验证选项，你可以通过扩展接口添加你需要的验证方式。
+
 ![截图](http://static.oschina.net/uploads/space/2014/0626/170940_Q6Fx_191986.png)
 
 ## Gradle 依赖
@@ -11,10 +16,10 @@ Add repository
 ```groovy
 
     allprojects {
-     repositories {
-         // !!!! ADD THIS !!!!
-         maven{ url 'http://oss.sonatype.org/content/groups/public/' }
-     }
+        repositories {
+            // !!!! ADD THIS !!!!
+            maven{ url 'http://oss.sonatype.org/content/groups/public/' }
+        }
     }
 
 ```
@@ -33,20 +38,19 @@ Add dependency
 * **Required** (必填)
 * **NotBlank** (非空数据)
 * **Digits** (仅数字)
-* **Date** (日期)
 * **Email** (电子邮件)
 * **EqualTo** (与指定值相同)
 * **Host** (主机地址)
-* **HTTPURL** (Http URL)
+* **URL** (Http URL)
 * **IPv4** (IPv4地址)
 * **LengthInRange** (指定长度范围)
-* **LengthInMin** (最小长度)
-* **LengthInMax** (最大长度)
+* **MinLength** (最小长度)
+* **MaxLength** (最大长度)
 * **Numeric** (数值)
 * **CreditCard** (信用卡号)
 * **ValueInRange** (最值范围)
-* **ValueInMin** (最小值)
-* **ValueInMax** (最大值)
+* **MinValue** (最小值)
+* **MaxValue** (最大值)
 * **ChineseMobilePhone** (中国的手机号码)
 
 ## 如何使用？
